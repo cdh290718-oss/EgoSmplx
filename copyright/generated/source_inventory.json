@@ -1,0 +1,270 @@
+{
+  "software": "第一视角下视双目鱼眼相机估计身体姿态软件 V1.0",
+  "files": [
+    {
+      "file_id": "F01",
+      "path": "egosmplx_pipeline/__init__.py",
+      "sha256": "3156c13b782697ea05413424aac4e61c04da2861da59ab7f6ec6be25f10ccb9c",
+      "physical_lines": 2,
+      "nonempty_lines": 2
+    },
+    {
+      "file_id": "F02",
+      "path": "egosmplx_pipeline/__main__.py",
+      "sha256": "c0eec7823a51944b1c23c5ff2c7316a5dd93639548ee2a752f3f0c43a9b30957",
+      "physical_lines": 36,
+      "nonempty_lines": 32
+    },
+    {
+      "file_id": "F03",
+      "path": "egosmplx_pipeline/configuration.py",
+      "sha256": "eebcf99d5a7393d60c98c2a384bc9cb584059c10d7020154426a6ba938dc19f4",
+      "physical_lines": 92,
+      "nonempty_lines": 83
+    },
+    {
+      "file_id": "F04",
+      "path": "egosmplx_pipeline/pipeline.py",
+      "sha256": "c42de10f0c374398e9327aba56baff17a2eb41e0a3cf66665b415f863dbaf540",
+      "physical_lines": 152,
+      "nonempty_lines": 142
+    },
+    {
+      "file_id": "F05",
+      "path": "egosmplx_pipeline/frame.py",
+      "sha256": "76f27ebee0ed5a05a6c4df0d6eb3e219b110ac811aa5995f3e07a670c78102dd",
+      "physical_lines": 141,
+      "nonempty_lines": 131
+    },
+    {
+      "file_id": "F06",
+      "path": "egosmplx_pipeline/bootstrap.py",
+      "sha256": "dd937e20b5dae8e4cc4cfd2d704935f0b7391e7708349a334525661a047dd262",
+      "physical_lines": 24,
+      "nonempty_lines": 23
+    },
+    {
+      "file_id": "F07",
+      "path": "egosmplx_pipeline/io.py",
+      "sha256": "a86de8aefd93027eb35519fb0c4d30b14108cbeb97d92bdde3c5dc77b620843f",
+      "physical_lines": 48,
+      "nonempty_lines": 36
+    },
+    {
+      "file_id": "F08",
+      "path": "egosmplx_pipeline/sampling.py",
+      "sha256": "992d9289a7161ec6a8c14c8a696656f87878fe22ce3bcd648b0d65cdf190538c",
+      "physical_lines": 38,
+      "nonempty_lines": 36
+    },
+    {
+      "file_id": "F09",
+      "path": "egosmplx_pipeline/sapiens_pose.py",
+      "sha256": "99b1b58136d58348cc1e942a8f8739949ca1b577c1f37834162970958658b4b9",
+      "physical_lines": 113,
+      "nonempty_lines": 107
+    },
+    {
+      "file_id": "F10",
+      "path": "egosmplx_pipeline/sapiens_seg.py",
+      "sha256": "5fcffa66fb69cda3ac6587e6d3174367a3f6431d33a3205094c6f65cadf1a355",
+      "physical_lines": 59,
+      "nonempty_lines": 57
+    },
+    {
+      "file_id": "F11",
+      "path": "egosmplx_pipeline/wilor_predict.py",
+      "sha256": "67040371870919b2d5d1c24d4bd766b63b20fc6ae03b51b9a35878c18c32bd4b",
+      "physical_lines": 184,
+      "nonempty_lines": 165
+    },
+    {
+      "file_id": "F12",
+      "path": "egosmplx_pipeline/body_common.py",
+      "sha256": "6ce9a301389cdf4c6fe1fb9d0e5b67a7fe4250ae758622d69bab1a84817d8fe9",
+      "physical_lines": 58,
+      "nonempty_lines": 50
+    },
+    {
+      "file_id": "F13",
+      "path": "egosmplx_pipeline/body_rigid.py",
+      "sha256": "42e47dd183bebbba3d5df5170efab3511d07cf304530298d13db53943e0155c8",
+      "physical_lines": 226,
+      "nonempty_lines": 218
+    },
+    {
+      "file_id": "F14",
+      "path": "egosmplx_pipeline/body_pose.py",
+      "sha256": "e1a0b114f4ed98a6722fbbdb457a7e5e802c00c920b4932be9941da74efa8c44",
+      "physical_lines": 226,
+      "nonempty_lines": 217
+    },
+    {
+      "file_id": "F15",
+      "path": "egosmplx_pipeline/contour.py",
+      "sha256": "2c3efd2c20fc835c341005357c6f0bcb3b58e5dc35c00c5ee5dea0140a0903f6",
+      "physical_lines": 101,
+      "nonempty_lines": 95
+    },
+    {
+      "file_id": "F16",
+      "path": "egosmplx_pipeline/projection.py",
+      "sha256": "9408292b9a3e927637d2204f684a7f59630c372f2840a1eeb6110d6378ca651e",
+      "physical_lines": 24,
+      "nonempty_lines": 23
+    },
+    {
+      "file_id": "F17",
+      "path": "egosmplx_pipeline/matching.py",
+      "sha256": "00a92782dbdf7aa09e3093fe02d8c1f3426c5b201718748f6f65aafbf6d5060d",
+      "physical_lines": 23,
+      "nonempty_lines": 22
+    },
+    {
+      "file_id": "F18",
+      "path": "egosmplx_pipeline/lift.py",
+      "sha256": "4882a7a8708ffcfe1550bedc7ce981edb7566715764384f7b9fda62eee370cb4",
+      "physical_lines": 44,
+      "nonempty_lines": 40
+    },
+    {
+      "file_id": "F19",
+      "path": "egosmplx_pipeline/topology.py",
+      "sha256": "83ceb5936e43aadd320865762cea4c4b4b288f3d6a1ff2de839165df6076af61",
+      "physical_lines": 34,
+      "nonempty_lines": 31
+    },
+    {
+      "file_id": "F20",
+      "path": "egosmplx_pipeline/fusion.py",
+      "sha256": "b3e12bac432fb36d225f191c6f0586093acc2ce3452feb6b095d37b0c94545eb",
+      "physical_lines": 112,
+      "nonempty_lines": 102
+    },
+    {
+      "file_id": "F21",
+      "path": "egosmplx_pipeline/render.py",
+      "sha256": "81c9da722af543876e6ef83988e797b28015e9877feafb0a5b6a53b0dab7cd79",
+      "physical_lines": 51,
+      "nonempty_lines": 47
+    },
+    {
+      "file_id": "F22",
+      "path": "egosmplx_pipeline/report.py",
+      "sha256": "b8597d8b099e65d2e56a8b8bfecb37f801b86a6b8e8bb2934c7809b076633641",
+      "physical_lines": 43,
+      "nonempty_lines": 41
+    },
+    {
+      "file_id": "F23",
+      "path": "egosmplx_pipeline/camera.py",
+      "sha256": "034806b8c4d8a49511be974810beb5ef1cc083c724d8b753acd52cd239181b37",
+      "physical_lines": 284,
+      "nonempty_lines": 248
+    },
+    {
+      "file_id": "F24",
+      "path": "egosmplx_pipeline/egosmplx_predict.py",
+      "sha256": "6b4f976887b61b4e7a046d446b35130965d508db13f47ecdfb412bc9e2b1b663",
+      "physical_lines": 2113,
+      "nonempty_lines": 1998
+    },
+    {
+      "file_id": "F25",
+      "path": "tests/test_core.py",
+      "sha256": "c19631f007d34695f328d9d89d6078670f1e1f2d8cd7f34bee5c99e44b97db4f",
+      "physical_lines": 78,
+      "nonempty_lines": 66
+    },
+    {
+      "file_id": "F26",
+      "path": "tests/test_projection.py",
+      "sha256": "cbad37b10b3aa9c8ad0dd5237bf7fa546e057498526fe39ad6ef5236ce9f8380",
+      "physical_lines": 50,
+      "nonempty_lines": 42
+    },
+    {
+      "file_id": "F27",
+      "path": "tools/export_copyright.py",
+      "sha256": "daf721d6b7d4356c74deff8d0a3cc76c627114baa9a0ff4355cdabfdc0e5ba18",
+      "physical_lines": 222,
+      "nonempty_lines": 198
+    },
+    {
+      "file_id": "F28",
+      "path": "run_example.sh",
+      "sha256": "4b5dc13ac046f8ff0dc7945a760c3da0be19ea8f7301bcffc96e1c3f08d2508b",
+      "physical_lines": 4,
+      "nonempty_lines": 4
+    }
+  ],
+  "physical_source_lines": 4582,
+  "nonempty_source_lines": 4256,
+  "printed_source_lines": 4496,
+  "full_source_pages": 90,
+  "deposited_original_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90
+  ],
+  "source_lines_per_page": 50,
+  "listing_rule": "Nonempty actual source lines only; long lines wrap for print with file/line references; no filler",
+  "ownership_status": "Applicant must verify rights and third-party boundaries"
+}

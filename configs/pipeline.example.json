@@ -1,0 +1,30 @@
+{
+  "manifest": "frames.example.json",
+  "output": "${PACKAGE_ROOT}/outputs/example_run",
+  "gpu": "0",
+  "paths": {
+    "body_python": "/data/envs/egosmplx/bin/python",
+    "pose_python": "/data/envs/stereo-hand-fusion/bin/python",
+    "wilor_python": "/data/envs/wilor/bin/python",
+    "egosmplx_repo": "/data/backends/EgoSMPLX",
+    "egosmplx_config": "/data/backends/EgoSMPLX/main/config/config_ft_egopw_sceneego_egowholebody_unrealego_egofishbody.py",
+    "egosmplx_checkpoint": "/data/weights/egosmplx/snapshot_11.pth.tar",
+    "sapiens_repo": "/data/backends/sapiens2",
+    "sapiens_dependencies": "/data/backends/EgoSMPLX/.runtime/sapiens_deps",
+    "pose_checkpoint": "/data/weights/sapiens2_1b_pose.safetensors",
+    "seg_checkpoint": "/data/weights/sapiens2_1b_seg.safetensors",
+    "wilor_repo": "/data/backends/WiLoR",
+    "wilor_checkpoint": "/data/weights/wilor_final.ckpt",
+    "wilor_config": "/data/weights/model_config.yaml",
+    "wilor_detector": "/data/weights/detector.pt"
+  },
+  "checkpoint_sha256": {
+    "pose": "REPLACE_WITH_VERIFIED_POSE_CHECKPOINT_SHA256",
+    "seg": "REPLACE_WITH_VERIFIED_SEG_CHECKPOINT_SHA256"
+  },
+  "fitting": {
+    "rigid_steps": 1800,
+    "pose_steps": 1600,
+    "silhouette_weight": 0.08
+  }
+}

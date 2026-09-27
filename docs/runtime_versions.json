@@ -1,0 +1,23 @@
+{
+  "egosmplx": {
+    "python": "3.8.20",
+    "torch": "1.12.1",
+    "cuda": "11.3",
+    "numpy": "1.23.1",
+    "opencv": "4.11.0"
+  },
+  "stereo-hand-fusion": {
+    "python": "3.10.0",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "numpy": "1.26.4",
+    "opencv": "4.13.0"
+  },
+  "wilor": {
+    "python": "3.10.0",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "numpy": "1.26.4",
+    "opencv": "4.13.0"
+  }
+}

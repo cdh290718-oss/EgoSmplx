@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "frames": [
+    {
+      "id": "sample_01_cam3",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_01_cam4",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_02_cam3",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_02_cam4",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_03_cam3",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_03_cam4",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_04_cam3",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    },
+    {
+      "id": "sample_04_cam4",
+      "body_max_abs_m": 0.0,
+      "fused_max_abs_m": 0.0,
+      "faces_equal": true
+    }
+  ],
+  "scope": "Eight saved fits independently regenerated with bundled camera and final fusion modules"
+}

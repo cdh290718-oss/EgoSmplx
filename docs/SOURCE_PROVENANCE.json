@@ -1,0 +1,73 @@
+{
+  "description": "Selected project pipeline functions adapted for configurable paths and automatic-only operation. Third-party model implementations are external dependencies. This inventory is technical provenance, not a legal ownership determination.",
+  "sources": [
+    {
+      "source": "EgoFishPose/handoff/sapiens2_two_stage_20260915/tools/refine_saved_smplx_body_pose.py",
+      "sha256": "d260660a7f511f7304111317c8040545c3af5abb33f1de93d109759f95141dd6"
+    },
+    {
+      "source": "EgoFishPose/handoff/sapiens2_two_stage_20260915/tools/optimize_saved_smplx_manual_keypoints.py",
+      "sha256": "3e0b54d205bb338041f98ad30bcdc31ed27ef492e9b4827280b4e2eadc4e4b31"
+    },
+    {
+      "source": "EgoFishPose/experiments/sapiens2_eight_conditions_20260915_v2/stable_projection.py",
+      "sha256": "a8dde6d176984f0e977d68a04044719295149ce5f2cbbc44970d741c18c4d637"
+    },
+    {
+      "source": "EgoFishPose/handoff/sapiens2_two_stage_20260915/tools/optimize_saved_smplx_sapiens2.py",
+      "sha256": "c60438805ec02f8ffdf68c606ecfab4ab1527a6f245273b185216e5cfd3c6219"
+    },
+    {
+      "source": "EgoFishPose/handoff/sapiens2_two_stage_20260915/tools/compare_sapiens2_body_refinement.py",
+      "sha256": "a5879cde5bcf81774eb6032f8aec827905b318b2d9859c0d2ae9079c81abb56a"
+    },
+    {
+      "source": "EgoFishPose/experiments/sapiens2_wilor_stitched_eight_conditions_20260918_v1/run.py",
+      "sha256": "f491a8ad089f6b4cbb14cc35406be8cb2bff2ece93883f1cb4b31ed13086bc2a"
+    },
+    {
+      "source": "EgoSMPLX/tools/stitch_smplx_wilor_hand_mesh.py",
+      "sha256": "9ec18cd6c59a613393379d717c01f1e0ad00a18089b28f87f18d0b40135f177c"
+    },
+    {
+      "source": "EgoSMPLX/tools/force_replace_smplx_hand_mesh_with_wilor.py",
+      "sha256": "9a728d03fb1285d1efdaaeb2b211d81064bc82f026ae8eb1f2af9ea65d5b9ff7"
+    },
+    {
+      "source": "EgoSMPLX/tools/rerender_staged_wireframe_clipped.py",
+      "sha256": "38ad711420f8dbc9edd8098a1f2e8b2a9d312a981c4d2dc662a51be2ac385c9d"
+    },
+    {
+      "source": "EgoSMPLX/tools/force_replace_smplx_hand_mesh_with_wilor.py",
+      "sha256": "9a728d03fb1285d1efdaaeb2b211d81064bc82f026ae8eb1f2af9ea65d5b9ff7"
+    },
+    {
+      "source": "EgoFishPose/experiments/sapiens2_wilor_eight_conditions_20260918_v3/optimize.py",
+      "sha256": "a165ba46ee9cef7e7f8934a94c779d4bf7428b233e4c5a0073bf94deacfd6914"
+    },
+    {
+      "source": "EgoSMPLX/tools/infer_downwardstereo_frames_detect.py",
+      "sha256": "dc652dbaf06078968519b70442aed9c01ee5d9c02a24a3e9c0a0c4f169996579"
+    },
+    {
+      "source": "EgoSMPLX/main/FishEyeCalibrated.py",
+      "sha256": "4b66d4147886cd8da25a911914986d2d0676eaafb399cc12b2239c9620769b71"
+    },
+    {
+      "source": "EgoFishPose/handoff/sapiens2_two_stage_20260915/tools/infer_sapiens2_single_image.py",
+      "sha256": "dab1f11cc240ab8fc042b48f5c5f08e33f0260331b8883678ff566ea6c4234de"
+    },
+    {
+      "source": "EgoFishPose/experiments/session_hand6_full_pipeline_20260926_v1/segmentation/run_seg.py",
+      "sha256": "83f2b5e8da8d2572eed7fb79c370fb7b7e10cbc013542dd9648688d5c6f4c09b"
+    },
+    {
+      "source": "EgoFishPose/experiments/session_hand6_full_pipeline_20260926_v1/infer_wilor.py",
+      "sha256": "babba5f72ec329087ae906438ffd011b9eac7980a0a41eda3a4f8c78ad3a2710"
+    }
+  ],
+  "published_adaptations": [
+    "Bundled initial inference adapter with configured backend root",
+    "Bundled calibrated camera with machine-specific demo removed"
+  ]
+}

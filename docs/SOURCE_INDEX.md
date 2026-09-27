@@ -1,0 +1,30 @@
+# 源码索引
+
+- F01：`egosmplx_pipeline/__init__.py`（2 行，非空 2 行）
+- F02：`egosmplx_pipeline/__main__.py`（36 行，非空 32 行）
+- F03：`egosmplx_pipeline/configuration.py`（92 行，非空 83 行）
+- F04：`egosmplx_pipeline/pipeline.py`（152 行，非空 142 行）
+- F05：`egosmplx_pipeline/frame.py`（141 行，非空 131 行）
+- F06：`egosmplx_pipeline/bootstrap.py`（24 行，非空 23 行）
+- F07：`egosmplx_pipeline/io.py`（48 行，非空 36 行）
+- F08：`egosmplx_pipeline/sampling.py`（38 行，非空 36 行）
+- F09：`egosmplx_pipeline/sapiens_pose.py`（113 行，非空 107 行）
+- F10：`egosmplx_pipeline/sapiens_seg.py`（59 行，非空 57 行）
+- F11：`egosmplx_pipeline/wilor_predict.py`（184 行，非空 165 行）
+- F12：`egosmplx_pipeline/body_common.py`（58 行，非空 50 行）
+- F13：`egosmplx_pipeline/body_rigid.py`（226 行，非空 218 行）
+- F14：`egosmplx_pipeline/body_pose.py`（226 行，非空 217 行）
+- F15：`egosmplx_pipeline/contour.py`（101 行，非空 95 行）
+- F16：`egosmplx_pipeline/projection.py`（24 行，非空 23 行）
+- F17：`egosmplx_pipeline/matching.py`（23 行，非空 22 行）
+- F18：`egosmplx_pipeline/lift.py`（44 行，非空 40 行）
+- F19：`egosmplx_pipeline/topology.py`（34 行，非空 31 行）
+- F20：`egosmplx_pipeline/fusion.py`（112 行，非空 102 行）
+- F21：`egosmplx_pipeline/render.py`（51 行，非空 47 行）
+- F22：`egosmplx_pipeline/report.py`（43 行，非空 41 行）
+- F23：`egosmplx_pipeline/camera.py`（284 行，非空 248 行）
+- F24：`egosmplx_pipeline/egosmplx_predict.py`（2113 行，非空 1998 行）
+- F25：`tests/test_core.py`（78 行，非空 66 行）
+- F26：`tests/test_projection.py`（50 行，非空 42 行）
+- F27：`tools/export_copyright.py`（222 行，非空 198 行）
+- F28：`run_example.sh`（4 行，非空 4 行）

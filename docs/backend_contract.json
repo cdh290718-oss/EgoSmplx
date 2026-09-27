@@ -1,0 +1,34 @@
+{
+  "backend": "separately installed project EgoSMPLX; not bundled in this repository",
+  "verified_files": [
+    {
+      "path": "tools/infer_downwardstereo_frames_detect.py",
+      "sha256": "dc652dbaf06078968519b70442aed9c01ee5d9c02a24a3e9c0a0c4f169996579"
+    },
+    {
+      "path": "main/FishEyeCalibrated.py",
+      "sha256": "4b66d4147886cd8da25a911914986d2d0676eaafb399cc12b2239c9620769b71"
+    },
+    {
+      "path": "common/utils/human_models.py",
+      "sha256": "a82f92f9980b7e58c05e176aedd0dfed812f0a463a7dbf627b722dce1169b145"
+    },
+    {
+      "path": "main/config/config_ft_egopw_sceneego_egowholebody_unrealego_egofishbody.py",
+      "sha256": "90e1da854ca3f8869181206bd585ac0a2682bd38ee368bcda9c22129858a40ad"
+    }
+  ],
+  "required_wilor_helper": "wilor.utils.yolo_loader.load_yolo_detector",
+  "backend_source_changes_may_affect_results": true,
+  "bundled_adapters": [
+    {
+      "path": "egosmplx_pipeline/egosmplx_predict.py",
+      "sha256": "6b4f976887b61b4e7a046d446b35130965d508db13f47ecdfb412bc9e2b1b663"
+    },
+    {
+      "path": "egosmplx_pipeline/camera.py",
+      "sha256": "034806b8c4d8a49511be974810beb5ef1cc083c724d8b753acd52cd239181b37"
+    }
+  ],
+  "verified_files_note": "Original source deployment snapshots for provenance; the inference adapter and camera are now bundled in this repository."
+}

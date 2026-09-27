@@ -1,0 +1,16 @@
+{
+  "frames": [
+    {
+      "id": "sample_01_cam3",
+      "camera": "cam3",
+      "image": "/data/images/cam3.png",
+      "calibration": "/data/calibration/cam3.egosmplx.json",
+      "predictions": {
+        "egosmplx": "/data/predictions/cam3/raw_network.npz",
+        "sapiens": "/data/predictions/cam3/keypoints.json",
+        "segmentation": "/data/predictions/cam3/segmentation",
+        "wilor": "/data/predictions/cam3/wilor.npz"
+      }
+    }
+  ]
+}

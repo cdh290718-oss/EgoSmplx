@@ -1,0 +1,16 @@
+{
+  "frames": [
+    {
+      "id": "sample_01_cam3",
+      "camera": "cam3",
+      "image": "/data/images/cam3.png",
+      "calibration": "/data/calibration/cam3.egosmplx.json"
+    },
+    {
+      "id": "sample_01_cam4",
+      "camera": "cam4",
+      "image": "/data/images/cam4.png",
+      "calibration": "/data/calibration/cam4.egosmplx.json"
+    }
+  ]
+}
