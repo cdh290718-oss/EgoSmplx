@@ -68,6 +68,9 @@
   ],
   "published_adaptations": [
     "Bundled initial inference adapter with configured backend root",
-    "Bundled calibrated camera with machine-specific demo removed"
-  ]
+    "Bundled calibrated camera with machine-specific demo removed",
+    "Archived wrist, contour and harmonic surface modules migrated with unchanged mathematical function ASTs"
+  ],
+  "reference_result_profile": "session_hand6_full_pipeline_20260926_v1",
+  "reference_module_provenance": "REFERENCE_CODE_PROVENANCE.json"
 }

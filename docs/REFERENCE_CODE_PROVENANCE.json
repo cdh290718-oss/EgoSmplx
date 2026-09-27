@@ -1,0 +1,54 @@
+{
+  "reference_archive_sha256": "19b9baf80998dbd3f6f0da8f620295251d97a2c9aeeb7c2d282d5c31835e7fd6",
+  "modules": [
+    {
+      "archive_member": "scripts/wrist/refine.py",
+      "archive_sha256": "5e22b4b691622cc4bf62d3ccf3fe6f849e4a18aa664bfa43f522c94495f45343",
+      "published_module": "egosmplx_pipeline/reference/wrist_refine.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/wrist/seam.py",
+      "archive_sha256": "1797b282fbc1c4213a6d777ebd480d3f5984b5d28d035775f045f348d936ebb2",
+      "published_module": "egosmplx_pipeline/reference/wrist_seam.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/silhouette.py",
+      "archive_sha256": "f2535b75bd0eceefa1e77582538ce9a75965ef7e210a3133a62a3110563cbdaf",
+      "published_module": "egosmplx_pipeline/reference/silhouette.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/refine.py",
+      "archive_sha256": "bfb35a93b9e529c856d95b012ad809551cbff9fe7edfd182857c7dcaf32a5bd7",
+      "published_module": "egosmplx_pipeline/reference/contour_refine.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/refine_strong.py",
+      "archive_sha256": "7dab0b3a61370c58bb8f9bdd8ff3c9198d3d735d900965c613b5f44e08d2b595",
+      "published_module": "egosmplx_pipeline/reference/contour_refine_strong.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/select_candidates.py",
+      "archive_sha256": "0aeba5a675708c61a3bd2a9848ccb8cc6869e36319bcb8faaa759a37be5602cc",
+      "published_module": "egosmplx_pipeline/reference/select_candidates.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/contour_seam.py",
+      "archive_sha256": "c357cb8e000567e85d246bb6ec2bfc491d1894ca1192413a10caad27e869ae16",
+      "published_module": "egosmplx_pipeline/reference/contour_seam.py",
+      "calculation_function_ast_unchanged": true
+    },
+    {
+      "archive_member": "scripts/contour/finalize.py",
+      "archive_sha256": "93b5b7c995d54ca6ac9d4d2011bfcf6a3e62d5e4a35bb27586d0bdf7f475f943",
+      "published_module": "egosmplx_pipeline/reference/finalize.py",
+      "calculation_function_ast_unchanged": true
+    }
+  ],
+  "changes": "Only module imports and configurable output roots. Mathematical function ASTs checked unchanged."
+}

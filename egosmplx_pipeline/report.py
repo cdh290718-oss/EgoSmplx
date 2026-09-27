@@ -12,7 +12,7 @@ def build(output, records):
     for row in records:
         identifier = row['id']
         panels = []
-        for stage, title in [('raw', 'Raw EgoSMPLX'), ('body', 'Sapiens2 body + contour'), ('fused', 'Fixed-rule MANO fusion')]:
+        for stage, title in [('raw', 'Raw EgoSMPLX'), ('body', 'Sapiens2 two-stage body fit'), ('fused', 'MANO + contour + harmonic surface')]:
             image = cv2.imread(str(output / 'frames' / identifier / stage / 'wireframe.jpg'))
             if image is None:
                 raise ValueError('Missing stage overlay: ' + identifier + '/' + stage)
@@ -34,10 +34,11 @@ def build(output, records):
                    body_rmse_px=float(np.sqrt(np.mean(np.square(body)))),
                    hand_rmse_px=float(np.sqrt(np.mean(np.square(hands)))) if hands else None,
                    all_reload_checks_passed=all(r['passed'] for r in records),
-                   manual_annotations_used=False, local_surface_optimizer=False,
+                   manual_annotations_used=False, local_surface_optimizer=any(r.get('local_surface_optimizer') for r in records),
+                   pipeline_profile='session_hand6_full_pipeline_20260926_v1',
                    reference='Sapiens2 body points / WiLoR hand points; not human ground truth')
     write(output / 'summary.json', summary)
     text = '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width">' + \
            '<title>EgoSmplx 三阶段对比</title><style>body{background:#161b22;color:#eee;font:16px sans-serif;margin:24px}img{width:100%}section{margin:32px 0}</style>' + \
-           '<h1>EgoSmplx V1.0 三阶段输出</h1><p>自动目标拟合误差，不是人工真值精度。固定规则缝合，未使用额外腕部优化。</p>' + ''.join(sections) + '</html>'
+           '<h1>EgoSmplx V1.0 三阶段输出</h1><p>自动目标拟合误差，不是人工真值精度。对应指定结果包的腕点校正、轮廓约束与局部谐波连接流程。</p>' + ''.join(sections) + '</html>'
     (output / 'index.html').write_text(text, encoding='utf-8')

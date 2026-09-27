@@ -1,8 +1,10 @@
 # 第一视角下视双目鱼眼相机估计身体姿态软件 V1.0
 
-简称 **EgoSmplx**。输入下视鱼眼图像及相机标定，依次完成 EgoSMPLX 初始推理、Sapiens2 自动关节点与可见前臂轮廓约束、WiLoR 手部推理和固定规则 MANO 网格融合，输出三个阶段的网格投影图、参数、OBJ 和验收报告。
+简称 **EgoSmplx**。输入下视鱼眼图像及相机标定，依次完成 EgoSMPLX 初始推理、Sapiens2 两阶段身体校正、WiLoR 手部推理、有界腕点与轮廓校正、MANO 网格融合及局部表面调整，输出三个阶段的网格投影图、参数、OBJ 和验收报告。
 
-本仓库整理的是 **简化路线 B**。手腕连接使用固定七圈 smoothstep 过渡；没有额外的腕部定位优化、腕环候选搜索或局部表面形变优化。自动拟合不读取人工标注。
+本仓库以 **`session_hand6_full_pipeline_20260926_v1/results_bundle.zip` 的实际生成流程**为准。此前首次发布的简化流程已纠正。自动拟合不读取人工标注。
+
+**先读：[指定结果包的完整流程、参数和复现方法](docs/REFERENCE_PIPELINE_zh.md)。** 2026-09-27 使用迁移后的代码独立重建了该 ZIP 的 8 个最终网格，全部网格字段逐值一致，顶点最大差为 0 米；这项验证使用已保存的最终身体参数与自动观测，不等于重新运行所有网络。
 
 ```mermaid
 flowchart LR
@@ -11,15 +13,17 @@ flowchart LR
     B --> D[刚体优化]
     C --> D
     D --> E[19 个身体关节与刚体微调]
-    C --> E
     A --> F[WiLoR / MANO 手部]
     E --> G[一对一左右手匹配]
     F --> G
-    G --> H[鱼眼反投影与固定七圈缝合]
-    H --> I[三阶段图像、参数、网格与重载验收]
+    G --> H[有界腕点校正]
+    H --> J[可见前臂轮廓候选选择]
+    C --> J
+    J --> K[鱼眼反投影与局部谐波表面连接]
+    K --> I[三阶段图像、参数、网格与重载验收]
 ```
 
-**双目范围：** 当前逐张处理 cam3、cam4，分别使用对应标定；不包含双目联合三角化、左右相机三维一致性优化或时序跟踪。最终融合网格需要 `body/params.npz`、MANO 预测和融合配方共同重建，不能仅靠一组标准 SMPL-X 参数恢复。
+**双目范围：** 当前逐张处理 cam3、cam4，分别使用对应标定；不包含双目联合三角化、左右相机三维一致性优化或时序跟踪。最终融合网格需要 `fused/body_params.npz`、MANO 预测、融合配方和冻结的轮廓目标共同重建，不能仅靠一组标准 SMPL-X 参数恢复。
 
 ## 快速开始
 
@@ -71,16 +75,26 @@ python3 -m egosmplx_pipeline sample \
 ├── frames/<帧ID>/
 │   ├── raw/       # 原始网络参数、mesh.obj、wireframe.jpg
 │   ├── rigid/     # 仅 global_orient 和 transl 优化
-│   ├── body_fit/  # 关节点与轮廓约束优化日志和诊断
+│   ├── body_fit/  # 第二阶段身体关节点优化日志和诊断
 │   ├── body/      # 规范化参数、mesh.obj、wireframe.jpg
-│   ├── fused/     # mesh.npz、mesh.obj、融合配方和投影图
+│   ├── baseline_fused/ # 后续校正前的初始手部融合
+│   ├── fused/     # 最终身体基底、mesh.npz、mesh.obj、轮廓目标、投影图
 │   └── validation.json
+├── reference/     # 腕点、轮廓候选与谐波表面各阶段及日志
 ├── observations/  # 原生推理路线的网络输出
 ├── index.html
 ├── contact_sheet.jpg
 ├── summary.json
 └── run_state.json
 ```
+
+完成后可以打包三阶段结果、输入图像、标定、重建所需的自动观测及运行源码：
+
+```bash
+python3 -m egosmplx_pipeline.package --run /data/results/new_run --archive /data/results/results_bundle_new.zip
+```
+
+打包前验证逐帧文件摘要，拒绝覆盖既有 ZIP；不包含权重和大型分割概率缓存。新包使用 `raw/body/fused` 目录名，对应历史包的 `01_raw/02_sapiens2_body/03_fusion`。
 
 `index.html` 使用相对路径；下载或分享时应携带同目录的 `*_comparison.jpg`，也可以直接分享 `contact_sheet.jpg`。这里的 RMSE 是对 **Sapiens2/WiLoR 自动目标点**的拟合误差，不是人工真值或三维精度。
 
@@ -110,4 +124,4 @@ python3 -m pip install -r requirements-docs.txt
 python3 tools/export_copyright.py
 ```
 
-当前版本保留标准人体形状参数及身体姿态先验。它能限制身体任意变细或膨胀，但不能保证自动标注、遮挡区域、极端姿态或固定手腕接缝都正确；重载与拓扑检查通过也不代表视觉精度已经达标。
+当前版本保留标准人体形状参数及身体姿态先验。它能限制身体任意变细或膨胀，但不能保证自动标注、遮挡区域、极端姿态或手腕接缝都正确；重载与拓扑检查通过也不代表视觉精度已经达标。

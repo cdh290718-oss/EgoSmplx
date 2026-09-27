@@ -1,4 +1,4 @@
-"""Execute fitting and fixed-rule fusion for one automatically observed frame."""
+"""Execute the two-stage body fit and prepare baseline fusion for refinement."""
 import argparse
 import json
 from pathlib import Path
@@ -63,9 +63,8 @@ def run(config, row, output):
     invoke(body_rigid.main, common + ['--source-npz', raw_dir / 'params.npz', '--keypoints', predictions['sapiens'],
                                     '--output-dir', output / 'rigid', '--steps', config['fitting']['rigid_steps'], '--device', 'cpu'])
     invoke(body_pose.main, common + ['--source-npz', output / 'rigid/optimized_params.npz',
-                                   '--automatic-keypoints', predictions['sapiens'], '--segmentation', predictions['segmentation'],
-                                   '--output-dir', output / 'body_fit', '--steps', config['fitting']['pose_steps'],
-                                   '--silhouette-weight', config['fitting']['silhouette_weight']])
+                                   '--automatic-keypoints', predictions['sapiens'],
+                                   '--output-dir', output / 'body_fit', '--steps', config['fitting']['pose_steps']])
     body = canonicalize(load(output / 'body_fit/automatic/refined_params.npz'), model, camera)
     body_dir = output / 'body'
     body_dir.mkdir()

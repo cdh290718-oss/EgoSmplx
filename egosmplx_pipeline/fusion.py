@@ -1,4 +1,4 @@
-"""Fixed seven-ring MANO seam; no wrist fitting or surface optimizer."""
+"""Seven-ring baseline used before the archived wrist/contour/surface refinement."""
 from collections import Counter
 import numpy as np
 import cv2

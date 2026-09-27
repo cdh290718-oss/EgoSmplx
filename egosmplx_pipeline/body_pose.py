@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Optimize 19 body joints and small rigid changes using automatic points and visible contours.
+"""Optimize 19 body joints and small rigid changes using automatic points.
 
 Shape, hands, feet and facial parameters stay fixed. No local surface deformation.
 """
@@ -21,14 +21,11 @@ def main():
     for key in ['repo-root', 'source-npz', 'image', 'calibration', 'automatic-keypoints', 'output-dir']:
         p.add_argument('--' + key, type=Path, required=True)
     p.add_argument('--steps', type=int, default=1600)
-    p.add_argument('--segmentation', type=Path, required=True)
-    p.add_argument('--silhouette-weight', type=float, default=.08)
     a = p.parse_args()
     os.environ['EGOSMPLX_REPO_ROOT'] = str(a.repo_root.resolve())
     from egosmplx_pipeline.bootstrap import setup
     setup(a.repo_root)
     from egosmplx_pipeline.body_common import BODY_POSE_NAMES, MAX_DELTA_DEG, JOINT_MAPPING, save_obj
-    from egosmplx_pipeline.contour import build_targets, contour_loss
     from FishEyeCalibrated import FishEyeCameraCalibrated
     from utils.human_models import smpl_x
     from utils.vis import render_mesh_fisheye
@@ -84,9 +81,7 @@ def main():
     def angle_between(x, y):
         rx, ry = cv2.Rodrigues(np.asarray(x, dtype=np.float64))[0], cv2.Rodrigues(np.asarray(y, dtype=np.float64))[0]
         return float(np.rad2deg(np.arccos(np.clip((np.trace(rx @ ry.T)-1)/2, -1, 1))))
-    contour_data, contour_report = build_targets(a.segmentation, lookup, cpu(initial[0]), cpu(initial[2]), smpl_x, w, h)
-    (a.output_dir / 'contour_targets.json').write_text(json.dumps(contour_report, indent=2))
-    settings = dict(silhouette_weight=a.silhouette_weight, steps=a.steps, device='cpu', target_weighting='uniform automatic targets',
+    settings = dict(steps=a.steps, device='cpu', target_weighting='uniform automatic targets',
                     body_lr=.0015, camera_lr=.0008, orient_lr=.0005,
                     pose_prior_weight=.0008, camera_prior_weight=.0002, orient_prior_weight=.0004,
                     smooth_l1_beta=.003, max_global_axis_angle_increment_deg=8.,
@@ -119,8 +114,7 @@ def main():
             # Start the barrier before the hard near plane. The legacy penalty
             # in raw meters was too weak relative to normalized pixel residuals.
             depth = F.relu((.03 - mesh[:, 2].min()) / .02).square()
-            sil = contour_loss(mesh, camera, contour_data, w, h)
-            loss = rep + .0008*pp + .0002*cp + .0004*gp + .002*guard + .02*depth + a.silhouette_weight*sil
+            loss = rep + .0008*pp + .0002*cp + .0004*gp + .002*guard + .02*depth
             if not torch.isfinite(loss):
                 raise RuntimeError('Nonfinite objective')
             feasible = bool((wrist_dist >= wrist_floor - 1e-6).all() and mesh[:, 2].min() >= .02 - 1e-6)

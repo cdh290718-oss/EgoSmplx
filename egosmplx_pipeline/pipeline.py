@@ -96,7 +96,7 @@ def fingerprint(config, rows):
                     hashes[row['id'] + ':' + name] = sha(Path(value) / name)
             else:
                 hashes[row['id'] + ':' + key] = sha(value)
-    code = {str(p.relative_to(PACKAGE_ROOT)): sha(p) for p in (PACKAGE_ROOT / 'egosmplx_pipeline').glob('*.py')}
+    code = {str(p.relative_to(PACKAGE_ROOT)): sha(p) for p in (PACKAGE_ROOT / 'egosmplx_pipeline').rglob('*.py')}
     return hashlib.sha256(json.dumps(dict(config=config, inputs=hashes, code=code), sort_keys=True).encode()).hexdigest()
 
 
@@ -146,6 +146,12 @@ def run(config_path, cached=False, resume=False):
                     output / (row['id'] + '.log'), PACKAGE_ROOT, env)
             records.append(read(validation))
             write(output / 'progress.json', dict(completed=index+1, total=len(rows), last_frame=row['id']))
+        if not all(r.get('pipeline_profile') == 'session_hand6_full_pipeline_20260926_v1' for r in records):
+            job_path = output / 'jobs/reference.json'
+            write(job_path, dict(config=config, rows=rows, output=str(output)))
+            command([config['paths']['body_python'], '-m', 'egosmplx_pipeline.reference.pipeline', '--job', job_path],
+                    output / 'reference.log', PACKAGE_ROOT, env)
+            records = [read(output / 'frames' / row['id'] / 'validation.json') for row in rows]
         from egosmplx_pipeline.report import build
         build(output, records)
         write(state_path, dict(fingerprint=signature, state='complete', frame_count=len(records), cached_predictions=cached))

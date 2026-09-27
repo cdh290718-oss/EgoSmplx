@@ -1,3 +1,5 @@
 # Controller and model-free tests. GPU model dependencies use separate environments.
 numpy>=1.20
 opencv-python>=4.5
+# Sparse harmonic surface solver (also required in body_python environment).
+scipy>=1.7

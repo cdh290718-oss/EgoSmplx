@@ -34,9 +34,11 @@ def load_config(path):
     config['manifest'] = absolute(config['manifest'], path.parent)
     config['output'] = absolute(config['output'], path.parent)
     fit = config.setdefault('fitting', {})
-    for key, default in [('rigid_steps', 1800), ('pose_steps', 1600), ('silhouette_weight', .08)]:
+    for key, default in [('rigid_steps', 1800), ('pose_steps', 1600)]:
         fit.setdefault(key, default)
-    if min(fit['rigid_steps'], fit['pose_steps']) < 1 or fit['silhouette_weight'] < 0:
+    if 'silhouette_weight' in fit:
+        raise ValueError('The reference profile applies contours after wrist refinement; remove fitting.silhouette_weight')
+    if min(fit['rigid_steps'], fit['pose_steps']) < 1:
         raise ValueError('Invalid fitting settings')
     manifest = read(config['manifest'])
     frames = expand(manifest['frames'], Path(config['manifest']).parent)
@@ -70,6 +72,8 @@ def preflight(config, frames, cached):
         image = cv2.imread(row['image'])
         if image is None:
             raise ValueError('Unreadable image: ' + row['image'])
+        if image.shape[1::-1] != (1280, 720):
+            raise ValueError('Reference profile requires 1280 x 720 images: ' + row['id'])
         calibration = read(row['calibration'])
         if calibration['size'] != list(image.shape[1::-1]):
             raise ValueError('Image and calibration sizes differ: ' + row['id'])

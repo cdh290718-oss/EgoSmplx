@@ -58,7 +58,7 @@ def source_listing():
                  'egosmplx_pipeline/sapiens_pose.py', 'egosmplx_pipeline/sapiens_seg.py',
                  'egosmplx_pipeline/wilor_predict.py', 'egosmplx_pipeline/body_common.py',
                  'egosmplx_pipeline/body_rigid.py', 'egosmplx_pipeline/body_pose.py',
-                 'egosmplx_pipeline/contour.py', 'egosmplx_pipeline/projection.py',
+                 'egosmplx_pipeline/projection.py',
                  'egosmplx_pipeline/matching.py', 'egosmplx_pipeline/lift.py',
                  'egosmplx_pipeline/topology.py', 'egosmplx_pipeline/fusion.py',
                  'egosmplx_pipeline/render.py', 'egosmplx_pipeline/report.py']
@@ -197,7 +197,7 @@ def main():
         stem = args.output / ('03_源程序文档_' + suffix)
         export_pdf(stem.with_suffix('.pdf'), title, '源程序文档（' + suffix + '）', pages, True, numbers)
         export_docx(stem.with_suffix('.docx'), title, '源程序文档（' + suffix + '）', pages, True, numbers)
-    figures = [('图1 八帧三阶段输出（左：原始；中：身体校正；右：固定缝合）', ROOT/'docs/assets/contact_sheet.jpg')]
+    figures = [('图1 八帧三阶段输出（左：原始；中：身体校正；右：MANO 融合与局部表面调整）', ROOT/'docs/assets/contact_sheet.jpg')]
     documents = [('01_登记信息填表稿', ROOT/'copyright/01_登记信息填表稿.md', []),
                  ('02_软件设计说明书', ROOT/'docs/DESIGN_zh.md', figures),
                  ('04_权属核对与提交清单', ROOT/'copyright/04_权属核对与提交清单.md', [])]
