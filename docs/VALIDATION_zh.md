@@ -1,4 +1,38 @@
-# 指定结果包的复现与验证
+# 当前默认流程验证（2026-09-30）
+
+当前配置：`mano_guided_original_seam_20260929_v1`。代码来源与函数 AST 核对见 [GUIDED_CODE_PROVENANCE.json](GUIDED_CODE_PROVENANCE.json)。以下证据与旧 session_hand6 归档验证分开列出。
+
+| 检查 | 实际执行范围 | 结果 |
+|---|---|---|
+| 新增身体优化迁移 | condition_01/cam3、condition_04/cam3，从同一冻结自动基线重跑最多1400步新增优化 | 两帧身体核心参数与已确认实验逐值一致 |
+| 八帧融合及重载 | 四场景八帧，使用对应身体参数重新执行原接缝、重建和 OBJ 核验 | 全部 NPZ 网格字段逐值一致，最大顶点差0米 |
+| 局部穿插 | 同一固定前臂／腕口支持集对完整表面检查 | 4/8通过，其余保留失败诊断 |
+| 单元与回归测试 | 默认／旧流程配置、错误配置拒绝、局部穿插、四列／三列报告及原匹配和相机测试 | 15项通过 |
+| 续跑与打包 | 校验输入与产物摘要后续跑，打包四阶段结果及新增诊断 | 续跑复用通过；ZIP CRC和76个成员摘要全部通过 |
+| 默认控制器完整缓存路线 | session_hand6/sample_01_cam3，重跑1800/1600身体、腕点、轮廓、新增身体增强、原接缝及导出 | 正常完成，4列投影、参数与融合重载通过；该帧局部穿插通过 |
+
+两帧新增优化与八帧网格证据见 [guided_migration_validation.json](guided_migration_validation.json)。默认控制器证据见 [current_controller_validation.json](current_controller_validation.json)。没有把已缓存网络预测描述成重新运行网络；没有重跑全部八帧上游身体拟合。数值一致性是在当前已部署环境中验证，不承诺其他硬件逐位一致。
+
+默认控制器的 sample_01_cam3 最终身体 RMSE 为 **24.19 px**，手部为 **11.74 px**。此帧属于 session_hand6，不能与下表四场景八帧混用。
+
+![默认控制器四阶段输出](assets/current_controller_stages.jpg)
+
+## 最新四场景八帧指标
+
+| 指标 | 增强前基线 | 增强身体＋原接缝 |
+|---|---:|---:|
+| 身体100个自动点 | 41.45 px | 37.52 px |
+| 身体统一排除鼻点94点 | 40.55 px | 38.57 px |
+| 肩肘腕47点 | 53.88 px | 51.71 px |
+| 手部294个自动点 | 14.91 px | 17.62 px |
+
+身体参考 Sapiens2，手部参考 WiLoR；四场景8帧14只匹配手，不是人工真值误差。figure9.2 曾用人工身体初始化，仅作事后比较；异常鼻点会主导其身体残差，因此保留排除鼻点的补充口径。逐点结果见 [current_body_rmse.json](current_body_rmse.json)。当前路线改善了部分身体贴合，但未获得稳定的手部增量提升。重载通过与穿插通过分别报告，仍有遮挡和腕部外形问题。
+
+![最新八帧融合投影](assets/current_eight_final.jpg)
+
+---
+
+# 旧 session_hand6 结果包的复现与验证
 
 验证日期：2026-09-27。参考结果为 `session_hand6_full_pipeline_20260926_v1/results_bundle.zip`，SHA-256 为 `19b9baf80998dbd3f6f0da8f620295251d97a2c9aeeb7c2d282d5c31835e7fd6`。此前首次发布的简化流程及其 13.90 px 手部误差不属于这个参考结果。
 

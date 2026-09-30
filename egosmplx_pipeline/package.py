@@ -10,6 +10,7 @@ from pathlib import Path
 import zipfile
 from egosmplx_pipeline.io import read, sha
 from egosmplx_pipeline.configuration import PACKAGE_ROOT
+from egosmplx_pipeline.profiles import SUPPORTED
 
 
 def package(run, destination):
@@ -21,7 +22,7 @@ def package(run, destination):
     sources = {}
     for path in sorted((run / 'frames').glob('*/validation.json')):
         report = read(path)
-        if not report.get('passed') or report.get('pipeline_profile') != 'session_hand6_full_pipeline_20260926_v1':
+        if not report.get('passed') or report.get('pipeline_profile') not in SUPPORTED or report.get('pipeline_profile') != read(run / 'summary.json')['pipeline_profile']:
             raise ValueError('Frame is not a verified reference-profile result')
         frame = path.parent
         for name, digest in report['artifact_sha256'].items():
@@ -38,7 +39,9 @@ def package(run, destination):
         sources[prefix + 'input' + Path(row['image']).suffix.lower()] = Path(row['image'])
         sources[prefix + 'calibration.json'] = Path(row['calibration'])
         sources[prefix + 'automatic_observations/sapiens2_keypoints.json'] = Path(row['predictions']['sapiens'])
-        for stage in ['raw', 'body', 'fused']:
+        for stage in ['raw', 'body', 'guided_body', 'fused']:
+            if stage == 'guided_body' and not (frame / stage).exists():
+                continue
             for asset in sorted((frame / stage).iterdir()):
                 if asset.is_file():
                     sources[prefix + stage + '/' + asset.name] = asset
@@ -51,6 +54,7 @@ def package(run, destination):
         sources['comparison/' + path.name] = path
     sources['summary.json'] = run / 'summary.json'
     sources['REFERENCE_PIPELINE_zh.md'] = PACKAGE_ROOT / 'docs/REFERENCE_PIPELINE_zh.md'
+    sources['CURRENT_PIPELINE_zh.md'] = PACKAGE_ROOT / 'docs/CURRENT_PIPELINE_zh.md'
     for path in sorted((PACKAGE_ROOT / 'egosmplx_pipeline').rglob('*.py')):
         sources['scripts/' + str(path.relative_to(PACKAGE_ROOT))] = path
     destination.parent.mkdir(parents=True, exist_ok=True)

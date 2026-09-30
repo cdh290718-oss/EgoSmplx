@@ -24,6 +24,8 @@
   },
   "fitting": {
     "rigid_steps": 1800,
-    "pose_steps": 1600
-  }
+    "pose_steps": 1600,
+    "mano_guided_steps": 1400
+  },
+  "pipeline_profile": "mano_guided_original_seam_20260929_v1"
 }

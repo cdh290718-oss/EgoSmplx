@@ -1,5 +1,7 @@
 # 指定 results_bundle.zip 的生成流程
 
+> 历史流程：运行本路线须设置 `pipeline_profile="session_hand6_full_pipeline_20260926_v1"`。当前默认路线见 [CURRENT_PIPELINE_zh.md](CURRENT_PIPELINE_zh.md)。
+
 本说明以 `session_hand6_full_pipeline_20260926_v1/results_bundle.zip` 的实际内容为准。目标是解释、保存并复现这批结果的生成方法。
 
 - ZIP SHA-256：`19b9baf80998dbd3f6f0da8f620295251d97a2c9aeeb7c2d282d5c31835e7fd6`。

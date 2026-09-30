@@ -12,8 +12,9 @@ import cv2
 from egosmplx_pipeline.io import read, write, load, sha
 from egosmplx_pipeline.configuration import PACKAGE_ROOT
 from egosmplx_pipeline.pipeline import command, environment
+from egosmplx_pipeline.profiles import CURRENT, LEGACY, selected
 
-PROFILE = 'session_hand6_full_pipeline_20260926_v1'
+PROFILE = LEGACY  # Historical compatibility; select the configured profile for every run.
 
 
 def prepare(rows, output):
@@ -80,6 +81,10 @@ def run_workers(config, rows, output):
     execute('select_candidates', [], '06_select')
     execute('finalize', [], '07_surface')
     execute('finalize', ['--verify'], '08_independent_reload')
+    if selected(config) == CURRENT:
+        execute('guided_body', ['--steps', str(config.get('fitting', {}).get('mano_guided_steps', 1400))], '09_mano_guided_body')
+        execute('guided_fuse', [], '10_original_seam')
+        execute('guided_fuse', ['--verify'], '11_guided_independent_reload')
 
 
 def export(config, rows, prepared, output):
@@ -93,19 +98,50 @@ def export(config, rows, prepared, output):
     for row in rows:
         frame = output / 'frames' / row['id']
         report = read(frame / 'validation.json')
-        report['pipeline_profile'] = PROFILE
+        report['pipeline_profile'] = selected(config)
         if row['id'] in mapping:
             reference_row = mapping[row['id']]
-            source = output / 'reference/contour/final_frames' / reference_row['condition'] / reference_row['camera']
+            relative = Path(reference_row['condition']) / reference_row['camera']
+            legacy_source = output / 'reference/contour/final_frames' / relative
+            source = legacy_source
             fused = frame / 'fused'
-            acceptance = read(source / 'acceptance.json')
-            if not acceptance.get('independent_reload'):
-                raise ValueError('Final surface did not pass independent reconstruction')
-            for name, renamed in [('body_params.npz', 'body_params.npz'), ('hybrid_mesh.npz', 'mesh.npz'),
-                                  ('hybrid_mesh.obj', 'mesh.obj'), ('refinement.json', 'refinement.json'),
-                                  ('geometry_report.json', 'geometry_report.json'), ('acceptance.json', 'acceptance.json'),
-                                  ('silhouette_targets.json', 'silhouette_targets.json')]:
-                shutil.copyfile(source / name, fused / renamed)
+            if selected(config) == CURRENT:
+                source = output / 'reference/guided/frames' / relative
+                reload = read(source / 'reload_validation.json')
+                if not reload.get('passed') or not reload.get('independent_reconstruction'):
+                    raise ValueError('Enhanced surface did not pass independent reconstruction')
+                audit = read(source / 'geometry_validation.json')
+                check = dict(audit['body_constraints'], independent_reload=True,
+                             vertex_reload_max_abs_m=reload['vertex_max_abs_m'],
+                             topology_preserved=audit['topology_unchanged'],
+                             local_surface_accepted=audit['all_local_crossing_checks_passed'])
+                write(fused / 'acceptance.json', check)
+                for name, renamed in [('body_params.npz','body_params.npz'),('hybrid_mesh.npz','mesh.npz'),
+                                      ('hybrid_mesh.obj','mesh.obj'),('optimization.json','optimization.json'),
+                                      ('seam_report.json','seam_report.json'),('geometry_validation.json','geometry_validation.json'),
+                                      ('reload_validation.json','reload_validation.json')]:
+                    shutil.copyfile(source / name, fused / renamed)
+                for name in ['refinement.json','silhouette_targets.json']:
+                    shutil.copyfile(legacy_source / name, fused / name)
+                write(fused / 'geometry_report.json', dict(hands=read(source / 'seam_report.json'),
+                      local_intersection_checks=audit['local_intersection_checks'],
+                      all_local_crossing_checks_passed=audit['all_local_crossing_checks_passed']))
+                guided = frame / 'guided_body'
+                guided.mkdir(exist_ok=True)
+                for name, renamed in [('body_params.npz','params.npz'),('body_mesh.obj','mesh.obj'),
+                                      ('body_wireframe.jpg','wireframe.jpg'),('optimization.json','optimization.json')]:
+                    shutil.copyfile(source / name, guided / renamed)
+                report.update(mano_guided_body=True, local_surface_accepted=audit['all_local_crossing_checks_passed'],
+                              surface_audit_scope=audit['intersection_scope'])
+            else:
+                acceptance = read(source / 'acceptance.json')
+                if not acceptance.get('independent_reload'):
+                    raise ValueError('Final surface did not pass independent reconstruction')
+                for name, renamed in [('body_params.npz', 'body_params.npz'), ('hybrid_mesh.npz', 'mesh.npz'),
+                                      ('hybrid_mesh.obj', 'mesh.obj'), ('refinement.json', 'refinement.json'),
+                                      ('geometry_report.json', 'geometry_report.json'), ('acceptance.json', 'acceptance.json'),
+                                      ('silhouette_targets.json', 'silhouette_targets.json')]:
+                    shutil.copyfile(source / name, fused / renamed)
             shutil.copyfile(Path(row['predictions']['segmentation']) / 'labels.npy', fused / 'segmentation_labels.npy')
             parameters, mesh = load(fused / 'body_params.npz'), load(fused / 'mesh.npz')
             v, joints = geometry(parameters)
@@ -138,19 +174,19 @@ def export(config, rows, prepared, output):
                           minimum_fused_vertex_z_m=float(mesh['vertices_cam'][:, 2].min()),
                           hand_reports=read(fused / 'geometry_report.json')['hands'], local_surface_optimizer=True,
                           selected_body_candidate=read(fused / 'refinement.json')['selected_candidate'])
-            write(fused / 'recipe.json', dict(matches=matches, pipeline_profile=PROFILE,
-                  method='bounded_standard_wrist_harmonic_seam_with_visible_contour',
+            write(fused / 'recipe.json', dict(matches=matches, pipeline_profile=selected(config),
+                  method=('MANO_guided_body_plus_original_bounded_contour_seam' if selected(config) == CURRENT else 'bounded_standard_wrist_harmonic_seam_with_visible_contour'),
                   body_parameter_path='body_params.npz', frozen_targets='silhouette_targets.json',
                   segmentation_labels='segmentation_labels.npy', local_surface_optimizer=True,
                   baseline_smoothstep_rings=7, manual_annotations_used=False,
                   standard_smplx_parameter_only_reconstruction=False))
         else:
-            report.update(local_surface_optimizer=False, reference_refinement_skipped='no_matched_hand')
+            report.update(local_surface_optimizer=False, mano_guided_body=False, local_surface_accepted=None, reference_refinement_skipped='no_matched_hand')
         report['artifact_sha256'] = {str(p.relative_to(frame)): sha(p) for p in frame.rglob('*')
                                      if p.is_file() and p != frame / 'validation.json'}
         write(frame / 'validation.json', report)
         reports.append(report)
-    write(output / 'reference/validation.json', dict(pipeline_profile=PROFILE, frames=reports))
+    write(output / 'reference/validation.json', dict(pipeline_profile=selected(config), frames=reports))
     return reports
 
 

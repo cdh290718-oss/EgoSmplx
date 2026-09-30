@@ -1,0 +1,46 @@
+{
+  "source_hashes_all_match": true,
+  "source_file_count": 46,
+  "physical_source_lines": 6055,
+  "full_source_pages": 127,
+  "deposit_pages": 60,
+  "source_pdf_lines_per_nonlast_page": 50,
+  "no_text_outside_page": true,
+  "documents": [
+    {
+      "file": "01_登记信息填表稿.pdf",
+      "pdf_pages": 1,
+      "docx_paragraphs": 27,
+      "pdf_sha256": "c32e7ba49c51acb80bbf203db385431c3f12c1998a98cc18b9f3525d5e5dbf93",
+      "docx_sha256": "1992362bed9028b8f64fcb73ae4ca54bf37d83730a6927282f6cb118d33e4f71"
+    },
+    {
+      "file": "02_软件设计说明书.pdf",
+      "pdf_pages": 7,
+      "docx_paragraphs": 189,
+      "pdf_sha256": "66422a2a4f773dc959728e6ec72272fa582af68d51bbac72f6fd9a687bdffc71",
+      "docx_sha256": "0171b60549f11fc5abf4737c5005f722a3f11628137b10a2c6f7f378cb3e496b"
+    },
+    {
+      "file": "03_源程序文档_交存.pdf",
+      "pdf_pages": 60,
+      "docx_paragraphs": 3014,
+      "pdf_sha256": "a57af17b0a1f498cb124e5b9b03f964a06ed3e9a0a4580af243aef944a2df6f0",
+      "docx_sha256": "d5aa074953d6075ad88353cfbf6da4868b78b072d31fdb91a758603166d078ab"
+    },
+    {
+      "file": "03_源程序文档_完整.pdf",
+      "pdf_pages": 127,
+      "docx_paragraphs": 6431,
+      "pdf_sha256": "81f24900bb276fe7c92bfb0447bdca972ca9510a942072108a8a52a3d5984f5c",
+      "docx_sha256": "9564156500cc5af18eb716b193bfcc1cddcda3fb1424c4efe10679e5744f18af"
+    },
+    {
+      "file": "04_权属核对与提交清单.pdf",
+      "pdf_pages": 1,
+      "docx_paragraphs": 25,
+      "pdf_sha256": "b4c8e1fa88cf23c159a32bcbd27108224a374cee7e8a55ea63887855d79d3bb1",
+      "docx_sha256": "b1df556b0d19b993b9669e05c2b323cb1296f037d2980d4c17f3fef4178e9678"
+    }
+  ]
+}

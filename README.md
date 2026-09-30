@@ -1,10 +1,10 @@
 # 第一视角下视双目鱼眼相机估计身体姿态软件 V1.0
 
-简称 **EgoSmplx**。输入下视鱼眼图像及相机标定，依次完成 EgoSMPLX 初始推理、Sapiens2 两阶段身体校正、WiLoR 手部推理、有界腕点与轮廓校正、MANO 网格融合及局部表面调整，输出三个阶段的网格投影图、参数、OBJ 和验收报告。
+简称 **EgoSmplx**。输入下视鱼眼图像及相机标定，依次完成 EgoSMPLX 初始推理、Sapiens2 两阶段身体校正、WiLoR 手部推理、有界腕点与轮廓校正、MANO 辅助身体优化及原接缝融合，输出分阶段网格投影、参数、OBJ 和验收报告。
 
-本仓库以 **`session_hand6_full_pipeline_20260926_v1/results_bundle.zip` 的实际生成流程**为准。此前首次发布的简化流程已纠正。自动拟合不读取人工标注。
+本仓库默认采用已确认的 **MANO 辅助身体优化 → 原有有界轮廓接缝融合**，配置名 `mano_guided_original_seam_20260929_v1`。旧 `session_hand6_full_pipeline_20260926_v1` 流程作为可选配置保留。自动拟合不读取人工标注。
 
-**先读：[指定结果包的完整流程、参数和复现方法](docs/REFERENCE_PIPELINE_zh.md)。** 2026-09-27 使用迁移后的代码独立重建了该 ZIP 的 8 个最终网格，全部网格字段逐值一致，顶点最大差为 0 米；这项验证使用已保存的最终身体参数与自动观测，不等于重新运行所有网络。
+**先读：[当前完整流程、参数、指标与恢复方法](docs/CURRENT_PIPELINE_zh.md)。** 新增阶段代码从已验证的八帧实验迁移；验证范围与结果见 [验证报告](docs/VALIDATION_zh.md)。[旧结果包流程](docs/REFERENCE_PIPELINE_zh.md)及旧重建记录继续保留，不能将旧验证直接视为新增算法已验证。
 
 ```mermaid
 flowchart LR
@@ -19,8 +19,10 @@ flowchart LR
     G --> H[有界腕点校正]
     H --> J[可见前臂轮廓候选选择]
     C --> J
-    J --> K[鱼眼反投影与局部谐波表面连接]
-    K --> I[三阶段图像、参数、网格与重载验收]
+    J --> M[MANO 手腕/掌根/腕环辅助身体优化]
+    F --> M
+    M --> K[原有鱼眼反投影与局部谐波接缝]
+    K --> I[四阶段图像、重载与局部穿插检查]
 ```
 
 **双目范围：** 当前逐张处理 cam3、cam4，分别使用对应标定；不包含双目联合三角化、左右相机三维一致性优化或时序跟踪。最终融合网格需要 `fused/body_params.npz`、MANO 预测、融合配方和冻结的轮廓目标共同重建，不能仅靠一组标准 SMPL-X 参数恢复。
@@ -78,9 +80,10 @@ python3 -m egosmplx_pipeline sample \
 │   ├── body_fit/  # 第二阶段身体关节点优化日志和诊断
 │   ├── body/      # 规范化参数、mesh.obj、wireframe.jpg
 │   ├── baseline_fused/ # 后续校正前的初始手部融合
-│   ├── fused/     # 最终身体基底、mesh.npz、mesh.obj、轮廓目标、投影图
+│   ├── guided_body/ # 新增 MANO 辅助身体参数、网格、投影和优化日志
+│   ├── fused/     # 增强身体＋原接缝：网格、冻结目标、投影和穿插诊断
 │   └── validation.json
-├── reference/     # 腕点、轮廓候选与谐波表面各阶段及日志
+├── reference/     # 腕点、轮廓、guided/ 身体增强及原接缝阶段日志
 ├── observations/  # 原生推理路线的网络输出
 ├── index.html
 ├── contact_sheet.jpg
@@ -88,13 +91,13 @@ python3 -m egosmplx_pipeline sample \
 └── run_state.json
 ```
 
-完成后可以打包三阶段结果、输入图像、标定、重建所需的自动观测及运行源码：
+完成后可以打包分阶段结果、输入图像、标定、重建所需的自动观测及运行源码：
 
 ```bash
 python3 -m egosmplx_pipeline.package --run /data/results/new_run --archive /data/results/results_bundle_new.zip
 ```
 
-打包前验证逐帧文件摘要，拒绝覆盖既有 ZIP；不包含权重和大型分割概率缓存。新包使用 `raw/body/fused` 目录名，对应历史包的 `01_raw/02_sapiens2_body/03_fusion`。
+打包前验证逐帧文件摘要，拒绝覆盖既有 ZIP；不包含权重和大型分割概率缓存。当前流程增加 `guided_body/`，四列依次为原始、Sapiens2 身体、MANO 辅助身体、最终融合。旧配置仍使用 `raw/body/fused` 三列。
 
 `index.html` 使用相对路径；下载或分享时应携带同目录的 `*_comparison.jpg`，也可以直接分享 `contact_sheet.jpg`。这里的 RMSE 是对 **Sapiens2/WiLoR 自动目标点**的拟合误差，不是人工真值或三维精度。
 
@@ -123,5 +126,9 @@ python3 -m compileall -q egosmplx_pipeline tools
 python3 -m pip install -r requirements-docs.txt
 python3 tools/export_copyright.py
 ```
+
+当前八帧：身体自动点 RMSE 41.45→37.52 px，手部自动点 RMSE 14.91→17.62 px；8/8 重载通过，4/8 局部穿插检查通过。当前采用版本并非所有指标最优。
+
+旧流程可通过 `pipeline_profile="session_hand6_full_pipeline_20260926_v1"` 选择；修改前恢复标签为 `checkpoint-before-mano-guided-flow-20260930`。切换流程使用新输出目录。
 
 当前版本保留标准人体形状参数及身体姿态先验。它能限制身体任意变细或膨胀，但不能保证自动标注、遮挡区域、极端姿态或手腕接缝都正确；重载与拓扑检查通过也不代表视觉精度已经达标。

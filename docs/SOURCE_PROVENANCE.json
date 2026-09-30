@@ -72,5 +72,50 @@
     "Archived wrist, contour and harmonic surface modules migrated with unchanged mathematical function ASTs"
   ],
   "reference_result_profile": "session_hand6_full_pipeline_20260926_v1",
-  "reference_module_provenance": "REFERENCE_CODE_PROVENANCE.json"
+  "reference_module_provenance": "REFERENCE_CODE_PROVENANCE.json",
+  "current_guided_modules": [
+    {
+      "source": "EgoFishPose/experiments/eight_conditions_mano_guided_original_seam_20260929_v1/guided.py",
+      "source_sha256": "56b8dfeba97eca0a26f22eaeecfc35632d723a5a099d70d4f041a2e999bd19d8",
+      "published_module": "egosmplx_pipeline/reference/guided_body.py",
+      "published_sha256": "d3f12546b9c4079ca710842d22402fd05c8200ed061a551b3c27ce877cd240a0",
+      "calculation_functions_ast_equal": {
+        "context": true,
+        "metrics": true
+      },
+      "comparison_note": "build comparison ignores only its adapted local import path; other listed functions compared exactly",
+      "fit_ast_equal_after_provenance_label_changes": true
+    },
+    {
+      "source": "EgoFishPose/experiments/eight_conditions_mano_guided_original_seam_20260929_v1/fuse.py",
+      "source_sha256": "769d79b319180520f5dd395fcf8079708fa9bc2d785dc6097e88c2108cea9979",
+      "published_module": "egosmplx_pipeline/reference/guided_fuse.py",
+      "published_sha256": "b7ca4c58c74201e55f601c2f5abc8dfde5efa46b4b8dce755e30760f23dd1e15",
+      "calculation_functions_ast_equal": {
+        "run": true
+      },
+      "comparison_note": "build comparison ignores only its adapted local import path; other listed functions compared exactly"
+    },
+    {
+      "source": "EgoFishPose/experiments/session_hand6_sample04_cam3_mano_wrist_20260926_v1/audit_mesh.py",
+      "source_sha256": "5410664cf5019bcaed78e0054630024a5abc4c72bbbe8336e3894d82a31db52e",
+      "published_module": "egosmplx_pipeline/reference/surface_audit.py",
+      "published_sha256": "9e2ff0ad1ef476276eaf79a8fd6c356755ce0e3558db0271192d4bc53a7375a5",
+      "calculation_functions_ast_equal": {
+        "segment_triangle": true,
+        "local_intersections": true
+      },
+      "comparison_note": "build comparison ignores only its adapted local import path; other listed functions compared exactly"
+    },
+    {
+      "source": "EgoFishPose/experiments/silhouette_constrained_eight_20260921_v1/contour_seam.py",
+      "source_sha256": "b19120885534e266d507131d7aadab69a919896b99a253ed536fbe879756a1aa",
+      "published_module": "egosmplx_pipeline/reference/contour_seam.py",
+      "published_sha256": "2e21521e2b1666973f91fd41ef518514d810490f4ca6736a9f77b83a97864627",
+      "calculation_functions_ast_equal": {
+        "build": true
+      },
+      "comparison_note": "build comparison ignores only its adapted local import path; other listed functions compared exactly"
+    }
+  ]
 }

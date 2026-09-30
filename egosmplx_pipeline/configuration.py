@@ -3,6 +3,7 @@ import os
 import re
 from pathlib import Path
 from egosmplx_pipeline.io import read, sha
+from egosmplx_pipeline.profiles import selected
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,17 +29,18 @@ def absolute(path, base):
 def load_config(path):
     path = Path(path).resolve()
     config = expand(read(path), path.parent)
+    config['pipeline_profile'] = selected(config)
     for key, value in config['paths'].items():
         if value:
             config['paths'][key] = absolute(value, path.parent)
     config['manifest'] = absolute(config['manifest'], path.parent)
     config['output'] = absolute(config['output'], path.parent)
     fit = config.setdefault('fitting', {})
-    for key, default in [('rigid_steps', 1800), ('pose_steps', 1600)]:
+    for key, default in [('rigid_steps', 1800), ('pose_steps', 1600), ('mano_guided_steps', 1400)]:
         fit.setdefault(key, default)
     if 'silhouette_weight' in fit:
         raise ValueError('The reference profile applies contours after wrist refinement; remove fitting.silhouette_weight')
-    if min(fit['rigid_steps'], fit['pose_steps']) < 1:
+    if any(not isinstance(fit[k], int) or isinstance(fit[k], bool) or fit[k] < 1 for k in ['rigid_steps','pose_steps','mano_guided_steps']):
         raise ValueError('Invalid fitting settings')
     manifest = read(config['manifest'])
     frames = expand(manifest['frames'], Path(config['manifest']).parent)

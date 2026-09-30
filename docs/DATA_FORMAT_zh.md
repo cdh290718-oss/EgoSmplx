@@ -20,13 +20,15 @@ WiLoR NPZ 包含检测框、detector_confidence、is_right、MANO 姿态与形�
 
 ## 输出资产
 
-`raw/params.npz` 和 `body/params.npz` 是标准 SMPL-X 参数，附带重新计算的网格及关节。更新参数后必须重新生成派生字段，不能把旧网格字段当作新参数的网格。
+`raw/params.npz`、`body/params.npz` 和新增 `guided_body/params.npz` 是标准 SMPL-X 参数，附带重新计算的网格及关节。更新参数后必须重新生成派生字段，不能把旧网格字段当作新参数的网格。
 
 `fused/mesh.npz` 保存最终 vertices_cam、faces、hand_joints_cam、body_joints_cam，以及各侧 MANO 到完整网格的顶点映射、抬升顶点、基线混合权重（legacy 字段）、目标投影和腕边界索引。OBJ 保存同一份最终几何。
 
-`fused/recipe.json` 保存冻结匹配身份与参考流程名称。重建需要 `fused/body_params.npz`、`fused/wilor_predictions.npz`、标定、`fused/silhouette_targets.json` 和 `fused/segmentation_labels.npy`，执行 `reference.contour_seam.build`。`body/params.npz` 只对应第二列，不能代替最终身体基底；最终混合网格也不是单一 SMPL-X 参数模型的标准输出。
+`fused/recipe.json` 保存冻结匹配身份与参考流程名称。重建需要 `fused/body_params.npz`、`fused/wilor_predictions.npz`、标定、`fused/silhouette_targets.json` 和 `fused/segmentation_labels.npy`，执行 `reference.contour_seam.build`；当前路线附带 method 标识为 `MANO_guided_body_plus_original_bounded_contour_seam`，其几何仍由原函数生成。`body/params.npz` 只对应第二列，不能代替最终身体基底；最终混合网格也不是单一 SMPL-X 参数模型的标准输出。
 
-指定历史 ZIP 将这三个展示目录命名为 `01_raw`、`02_sapiens2_body`、`03_fusion`。仓库新运行使用 `raw`、`body`、`fused`，内容角色对应，但目录名和打包字节不要求相同。完整的阶段中间产物位于输出 `reference/` 中。
+指定历史 ZIP 将这三个展示目录命名为 `01_raw`、`02_sapiens2_body`、`03_fusion`。旧配置使用 `raw`、`body`、`fused`；当前默认增加 `guided_body`，其余内容角色对应，但目录名和打包字节不要求相同。完整的阶段中间产物位于输出 `reference/` 中。
+
+`fused/optimization.json` 保存新增身体优化，`geometry_validation.json` 保存局部穿插，`reload_validation.json` 保存独立重建。`validation.json` 的 passed 不等于 local_surface_accepted；后者单独为 true/false/null。
 
 ## RMSE
 

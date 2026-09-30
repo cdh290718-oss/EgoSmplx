@@ -6,5 +6,7 @@
   "rights_holder": "【待填写】",
   "development_completion_date": "【待确认】",
   "first_publication_date_and_place": "【待核实历史首次发表事实】",
-  "development_mode": "【待确认：独立开发、合作开发或其他实际情况】"
+  "development_mode": "【待确认：独立开发、合作开发或其他实际情况】",
+  "algorithm_revision": "2026-09-30",
+  "default_pipeline_profile": "mano_guided_original_seam_20260929_v1"
 }

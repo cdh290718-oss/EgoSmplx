@@ -197,7 +197,9 @@ def main():
         stem = args.output / ('03_源程序文档_' + suffix)
         export_pdf(stem.with_suffix('.pdf'), title, '源程序文档（' + suffix + '）', pages, True, numbers)
         export_docx(stem.with_suffix('.docx'), title, '源程序文档（' + suffix + '）', pages, True, numbers)
-    figures = [('图1 八帧三阶段输出（左：原始；中：身体校正；右：MANO 融合与局部表面调整）', ROOT/'docs/assets/contact_sheet.jpg')]
+    figures = [('图1 当前四场景八帧：MANO 辅助身体＋原接缝最终投影（仍有局部外观问题）', ROOT/'docs/assets/current_eight_final.jpg')]
+    if (ROOT/'docs/assets/current_controller_stages.jpg').exists():
+        figures.append(('图2 当前控制器四阶段输出：原始、Sapiens2 身体、MANO 辅助身体、原接缝融合', ROOT/'docs/assets/current_controller_stages.jpg'))
     documents = [('01_登记信息填表稿', ROOT/'copyright/01_登记信息填表稿.md', []),
                  ('02_软件设计说明书', ROOT/'docs/DESIGN_zh.md', figures),
                  ('04_权属核对与提交清单', ROOT/'copyright/04_权属核对与提交清单.md', [])]

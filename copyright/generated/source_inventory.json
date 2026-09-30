@@ -18,16 +18,16 @@
     {
       "file_id": "F03",
       "path": "egosmplx_pipeline/configuration.py",
-      "sha256": "7c15782a36a1207ec863a7b6693eba8bbd7b41a8494f1084d3d1339295d54602",
-      "physical_lines": 96,
-      "nonempty_lines": 87
+      "sha256": "2167759c4c177a34802a0596fd69124d53094c798dfe75fde266b8e8c051fc01",
+      "physical_lines": 98,
+      "nonempty_lines": 89
     },
     {
       "file_id": "F04",
       "path": "egosmplx_pipeline/pipeline.py",
-      "sha256": "40fd3223b16d2189d0f3180ac2b122ea1ad89fda083def3c53b6568d6fc79006",
-      "physical_lines": 158,
-      "nonempty_lines": 148
+      "sha256": "0e9fabd0163800fb0db431ef0fc588807d667707d5f45ccb8db5edeed5f0ed7c",
+      "physical_lines": 159,
+      "nonempty_lines": 149
     },
     {
       "file_id": "F05",
@@ -144,9 +144,9 @@
     {
       "file_id": "F21",
       "path": "egosmplx_pipeline/report.py",
-      "sha256": "31eeec407e35056044054cdca0e4941550e86870191a757930e6cccc990a28d7",
-      "physical_lines": 44,
-      "nonempty_lines": 42
+      "sha256": "7bca7b6fef9ae1ce8b9d8a27113d0bc80123f27ab8dad0ce0c7d0601eec2b660",
+      "physical_lines": 57,
+      "nonempty_lines": 55
     },
     {
       "file_id": "F22",
@@ -165,127 +165,169 @@
     {
       "file_id": "F24",
       "path": "egosmplx_pipeline/package.py",
-      "sha256": "e492ffa4239ce01ecfeb30b0fb8591c16fdf5c7ea6a2b82866c5cb05498c8449",
-      "physical_lines": 81,
-      "nonempty_lines": 74
+      "sha256": "4a37882807ba2341fcb3737c471bc7245f16da34d57c7af9b14c4950a81953b3",
+      "physical_lines": 85,
+      "nonempty_lines": 78
     },
     {
       "file_id": "F25",
+      "path": "egosmplx_pipeline/profiles.py",
+      "sha256": "3f03c0af23e9369711d9f58f65a37de67ccebc61b9772ef5c827f379539959f8",
+      "physical_lines": 11,
+      "nonempty_lines": 9
+    },
+    {
+      "file_id": "F26",
       "path": "egosmplx_pipeline/reference/__init__.py",
       "sha256": "3716e39b63b4a0ca1b202b87e2b87efd8eb0e15bae648cdc6dad26762f0b0e6f",
       "physical_lines": 1,
       "nonempty_lines": 1
     },
     {
-      "file_id": "F26",
+      "file_id": "F27",
       "path": "egosmplx_pipeline/reference/contour_refine.py",
       "sha256": "a5262978600891b3a291a514ec04c96fe340c94d4856fe8ea40fc6358bda1815",
       "physical_lines": 119,
       "nonempty_lines": 117
     },
     {
-      "file_id": "F27",
+      "file_id": "F28",
       "path": "egosmplx_pipeline/reference/contour_refine_strong.py",
       "sha256": "a2d58f27440ed70d2aa854c7e955624862ee9ee1d0a26b424344d17dcc3126b0",
       "physical_lines": 122,
       "nonempty_lines": 120
     },
     {
-      "file_id": "F28",
+      "file_id": "F29",
       "path": "egosmplx_pipeline/reference/contour_seam.py",
       "sha256": "2e21521e2b1666973f91fd41ef518514d810490f4ca6736a9f77b83a97864627",
       "physical_lines": 114,
       "nonempty_lines": 109
     },
     {
-      "file_id": "F29",
+      "file_id": "F30",
       "path": "egosmplx_pipeline/reference/finalize.py",
       "sha256": "37e80d6c5ad654723686062acca6a692f6d31630cdb75199eaefb81099cdb6ad",
       "physical_lines": 32,
       "nonempty_lines": 32
     },
     {
-      "file_id": "F30",
-      "path": "egosmplx_pipeline/reference/pipeline.py",
-      "sha256": "ba2dfecbf4a21863d93fbdd83f700aee94771f90d1b8af31034299a842a4796d",
-      "physical_lines": 174,
-      "nonempty_lines": 160
+      "file_id": "F31",
+      "path": "egosmplx_pipeline/reference/guided_body.py",
+      "sha256": "d3f12546b9c4079ca710842d22402fd05c8200ed061a551b3c27ce877cd240a0",
+      "physical_lines": 141,
+      "nonempty_lines": 135
     },
     {
-      "file_id": "F31",
+      "file_id": "F32",
+      "path": "egosmplx_pipeline/reference/guided_fuse.py",
+      "sha256": "b7ca4c58c74201e55f601c2f5abc8dfde5efa46b4b8dce755e30760f23dd1e15",
+      "physical_lines": 47,
+      "nonempty_lines": 46
+    },
+    {
+      "file_id": "F33",
+      "path": "egosmplx_pipeline/reference/pipeline.py",
+      "sha256": "59f86465217545555412660f3aa030504bff6f37f639981b2ea5e9ff7affc06c",
+      "physical_lines": 210,
+      "nonempty_lines": 196
+    },
+    {
+      "file_id": "F34",
       "path": "egosmplx_pipeline/reference/rebuild_archive.py",
       "sha256": "f80ec73c476da92bc217802f61ba303f305b3a9a4a8ce7c0d694ad1c4429679f",
       "physical_lines": 108,
       "nonempty_lines": 100
     },
     {
-      "file_id": "F32",
+      "file_id": "F35",
       "path": "egosmplx_pipeline/reference/select_candidates.py",
       "sha256": "5eede84b33b9dc685d819f4406bf8cdefc36ca3d31becd072375362db51a29e0",
       "physical_lines": 42,
       "nonempty_lines": 41
     },
     {
-      "file_id": "F33",
+      "file_id": "F36",
       "path": "egosmplx_pipeline/reference/silhouette.py",
       "sha256": "4db85d4ebd266333ac714a8e828ad992b8bd56bb77fbb68b8fae4ade4b582625",
       "physical_lines": 59,
       "nonempty_lines": 55
     },
     {
-      "file_id": "F34",
+      "file_id": "F37",
       "path": "egosmplx_pipeline/reference/support.py",
       "sha256": "5731406a1358b4a6aa7a253170e442006ff5962b01c90d9e2842ff346117908e",
       "physical_lines": 52,
       "nonempty_lines": 48
     },
     {
-      "file_id": "F35",
+      "file_id": "F38",
+      "path": "egosmplx_pipeline/reference/surface_audit.py",
+      "sha256": "9e2ff0ad1ef476276eaf79a8fd6c356755ce0e3558db0271192d4bc53a7375a5",
+      "physical_lines": 32,
+      "nonempty_lines": 29
+    },
+    {
+      "file_id": "F39",
       "path": "egosmplx_pipeline/reference/wrist_refine.py",
       "sha256": "6e71542e0adf1629b333c3da4004f2d97e412a48594b01951f1f1ad893933cc6",
       "physical_lines": 115,
       "nonempty_lines": 113
     },
     {
-      "file_id": "F36",
+      "file_id": "F40",
       "path": "egosmplx_pipeline/reference/wrist_seam.py",
       "sha256": "e77f31399bb9ccd3e7d481da88895a72c1bb118651ada631a185f80ee86dcc57",
       "physical_lines": 118,
       "nonempty_lines": 112
     },
     {
-      "file_id": "F37",
+      "file_id": "F41",
       "path": "tests/test_core.py",
       "sha256": "c19631f007d34695f328d9d89d6078670f1e1f2d8cd7f34bee5c99e44b97db4f",
       "physical_lines": 78,
       "nonempty_lines": 66
     },
     {
-      "file_id": "F38",
+      "file_id": "F42",
+      "path": "tests/test_guided_profile.py",
+      "sha256": "ff3371bef849792c57ff01e521030ff1d096f0036dc6e623d6789cb0e9c9a4b8",
+      "physical_lines": 70,
+      "nonempty_lines": 62
+    },
+    {
+      "file_id": "F43",
       "path": "tests/test_projection.py",
       "sha256": "cbad37b10b3aa9c8ad0dd5237bf7fa546e057498526fe39ad6ef5236ce9f8380",
       "physical_lines": 50,
       "nonempty_lines": 42
     },
     {
-      "file_id": "F39",
+      "file_id": "F44",
       "path": "tools/export_copyright.py",
-      "sha256": "696b1cfb840ed4c41d44277609adcaee6ee9a7ddc99507efed8c5ea7f7cdcffe",
-      "physical_lines": 222,
-      "nonempty_lines": 198
+      "sha256": "80af3eed287b39d350f6063548bc16a7365af782786b8b40e94fad058e2ef448",
+      "physical_lines": 224,
+      "nonempty_lines": 200
     },
     {
-      "file_id": "F40",
+      "file_id": "F45",
+      "path": "tools/verify_guided_migration.py",
+      "sha256": "0fc79cc11d1a0ebdb8608e99f9017c2d560ac9480330ab9f3c0dca82c13f4d00",
+      "physical_lines": 74,
+      "nonempty_lines": 69
+    },
+    {
+      "file_id": "F46",
       "path": "run_example.sh",
       "sha256": "4b5dc13ac046f8ff0dc7945a760c3da0be19ea8f7301bcffc96e1c3f08d2508b",
       "physical_lines": 4,
       "nonempty_lines": 4
     }
   ],
-  "physical_source_lines": 5622,
-  "nonempty_source_lines": 5247,
-  "printed_source_lines": 5793,
-  "full_source_pages": 116,
+  "physical_source_lines": 6055,
+  "nonempty_source_lines": 5655,
+  "printed_source_lines": 6305,
+  "full_source_pages": 127,
   "deposited_original_pages": [
     1,
     2,
@@ -317,17 +359,6 @@
     28,
     29,
     30,
-    87,
-    88,
-    89,
-    90,
-    91,
-    92,
-    93,
-    94,
-    95,
-    96,
-    97,
     98,
     99,
     100,
@@ -346,7 +377,18 @@
     113,
     114,
     115,
-    116
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127
   ],
   "source_lines_per_page": 50,
   "listing_rule": "Nonempty actual source lines only; long lines wrap for print with file/line references; no filler",

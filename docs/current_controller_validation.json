@@ -1,0 +1,40 @@
+{
+  "scope": "One cached-prediction frame through the public default controller: raw body reconstruction, 1800/1600 body fitting, wrist and contour stages, added MANO guidance, original seam, independent reload and report. Neural networks not rerun.",
+  "case": "session_hand6/sample_01_cam3",
+  "summary": {
+    "frame_count": 1,
+    "matched_hands": 2,
+    "body_target_count": 13,
+    "hand_target_count": 42,
+    "body_rmse_px": 24.193575241018337,
+    "hand_rmse_px": 11.73983920158647,
+    "all_reload_checks_passed": true,
+    "manual_annotations_used": false,
+    "local_surface_optimizer": true,
+    "pipeline_profile": "mano_guided_original_seam_20260929_v1",
+    "local_surface_pass_count": 1,
+    "local_surface_audited_count": 1,
+    "reference": "Sapiens2 body points / WiLoR hand points; not human ground truth"
+  },
+  "validation": {
+    "passed": true,
+    "pipeline_profile": "mano_guided_original_seam_20260929_v1",
+    "mano_guided_body": true,
+    "local_surface_accepted": true,
+    "body_reload_max_abs_m": 0.0,
+    "fusion_reload_max_abs_m": 0.0,
+    "obj_reload_max_abs_m": 0.0
+  },
+  "resume_verified": true,
+  "unit_tests": {
+    "passed": 15,
+    "failed": 0
+  },
+  "package_validation": {
+    "crc_passed": true,
+    "all_member_hashes_passed": true,
+    "manifest_members": 76,
+    "sha256": "5d127e007408e560baf0c6b9ced97f13843eb76632520f46d157079cb21c9263",
+    "guided_stage_and_diagnostics_included": true
+  }
+}

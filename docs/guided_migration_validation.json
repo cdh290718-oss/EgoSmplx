@@ -1,0 +1,99 @@
+{
+  "frame_count": 8,
+  "manifest_sha256": "bded8a3802217a9eb20d10da89cc23b6faba48810cf78e9e4fcc9bf0b7663f1a",
+  "optimizer_rerun_count": 2,
+  "all_body_parameters_bitwise_equal": true,
+  "all_mesh_fields_bitwise_equal": true,
+  "local_surface_pass_count": 4,
+  "scope": "Added optimizer rerun on selected frozen automatic inputs; all final meshes independently rebuilt and reloaded; networks and upstream fitting not rerun",
+  "frames": [
+    {
+      "id": "cam3_left_lower_t15.000s_f000895",
+      "condition": "condition_01_normal_pose",
+      "camera": "cam3",
+      "optimizer_rerun": true,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": true,
+      "independent_reload": true
+    },
+    {
+      "id": "cam4_right_lower_t15.000s_f000895",
+      "condition": "condition_01_normal_pose",
+      "camera": "cam4",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": true,
+      "independent_reload": true
+    },
+    {
+      "id": "cam3_left_lower_t037.000s_f002209",
+      "condition": "condition_02_hand_object_interaction",
+      "camera": "cam3",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": true,
+      "independent_reload": true
+    },
+    {
+      "id": "cam4_right_lower_t037.000s_f002208",
+      "condition": "condition_02_hand_object_interaction",
+      "camera": "cam4",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": true,
+      "independent_reload": true
+    },
+    {
+      "id": "cam3_left_lower_t45.000s_f002686",
+      "condition": "condition_03_hand_object_occlusion",
+      "camera": "cam3",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": false,
+      "independent_reload": true
+    },
+    {
+      "id": "cam4_right_lower_t45.000s_f002686",
+      "condition": "condition_03_hand_object_occlusion",
+      "camera": "cam4",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": false,
+      "independent_reload": true
+    },
+    {
+      "id": "cam3_left_lower_t35.000s_f002089",
+      "condition": "condition_04_failure_case",
+      "camera": "cam3",
+      "optimizer_rerun": true,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": false,
+      "independent_reload": true
+    },
+    {
+      "id": "cam4_right_lower_t35.000s_f002089",
+      "condition": "condition_04_failure_case",
+      "camera": "cam4",
+      "optimizer_rerun": false,
+      "body_parameters_bitwise_equal": true,
+      "all_mesh_fields_bitwise_equal": true,
+      "vertex_max_abs_m": 0.0,
+      "local_crossings_passed": false,
+      "independent_reload": true
+    }
+  ]
+}

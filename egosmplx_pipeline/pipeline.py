@@ -10,6 +10,7 @@ import subprocess
 import sys
 from egosmplx_pipeline.configuration import PACKAGE_ROOT, load_config, preflight
 from egosmplx_pipeline.io import read, write, sha
+from egosmplx_pipeline.profiles import selected
 
 
 def command(args, log, cwd, environment):
@@ -146,7 +147,7 @@ def run(config_path, cached=False, resume=False):
                     output / (row['id'] + '.log'), PACKAGE_ROOT, env)
             records.append(read(validation))
             write(output / 'progress.json', dict(completed=index+1, total=len(rows), last_frame=row['id']))
-        if not all(r.get('pipeline_profile') == 'session_hand6_full_pipeline_20260926_v1' for r in records):
+        if not all(r.get('pipeline_profile') == selected(config) for r in records):
             job_path = output / 'jobs/reference.json'
             write(job_path, dict(config=config, rows=rows, output=str(output)))
             command([config['paths']['body_python'], '-m', 'egosmplx_pipeline.reference.pipeline', '--job', job_path],
