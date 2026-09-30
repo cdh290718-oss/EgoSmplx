@@ -12,8 +12,9 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
-from copyright_layout import base_document, element, export_pdfs, inline as base_inline, set_fonts
+from copyright_layout import base_document, element, export_pdfs, inline as base_inline, page_field, set_fonts
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_CELL_VERTICAL_ALIGNMENT
+from docx.enum.text import WD_TAB_ALIGNMENT
 from docx.oxml.ns import qn
 from docx.shared import Pt
 from PIL import Image, ImageDraw, ImageFont
@@ -223,6 +224,18 @@ def build(output):
     for part in [document.sections[0].header,document.sections[0].first_page_header]:
         for paragraph in part.paragraphs:
             paragraph.paragraph_format.right_indent=Pt(-39.6)
+    section=document.sections[0]
+    document.styles['Header'].paragraph_format.tab_stops.clear_all()
+    header=section.header.paragraphs[0]
+    header.clear()
+    header.alignment=0
+    tabs=header.paragraph_format.tab_stops
+    tabs.clear_all()
+    tabs.add_tab_stop(Pt(595.32/2-73.7),WD_TAB_ALIGNMENT.CENTER)
+    tabs.add_tab_stop(Pt(WIDTH+39.6),WD_TAB_ALIGNMENT.RIGHT)
+    set_fonts(header.add_run('\t'+title+'\t第 '),9)
+    page_field(header,9,'Times New Roman')
+    set_fonts(header.add_run(' 页'),9)
     for level,size in [(1,14),(2,12),(3,12)]:
         style=document.styles[f'Heading {level}']
         fmt=style.paragraph_format

@@ -6,9 +6,9 @@
 
 ### 1.1 编写目的
 
-本软件用于处理第一视角下视鱼眼图像，估计相机佩戴者的身体姿态，并结合手部预测生成人体三维网格。软件将图像读取、模型预测、身体拟合、手部融合和结果检查连接为一套处理流程，保存每个阶段的参数、网格及原图投影，便于检查姿态变化和重新计算结果。
+身体姿态与双手动作的三维表达是虚拟化身驱动、第一视角交互分析和具身操作示范研究的基础。下视双目鱼眼图像能够记录使用者的近身动作，但畸变、遮挡和视野截断会影响身体与手部的估计结果，单独预测的身体和手部也难以直接形成可用的整体人体模型。
 
-本说明书介绍 V1.0 的程序组成、数据格式、主要算法和运行方法，供从事第一视角人体姿态研究、数据处理及软件维护的人员使用。软件名称、登记版本和程序包版本分别为“第一视角下视双目鱼眼相机估计身体姿态软件”、V1.0 和 1.0.0。
+本软件面向下视双目鱼眼图像的人体姿态重建，以两路图像及各自的相机标定为输入，将人体预测、身体姿态校正、手部匹配与局部网格融合组织为可重复执行的处理流程。软件输出人体参数、三维网格和原图投影，并保留各阶段的检查记录，为姿态算法实验、动作数据分析和交互示范数据整理提供可复核的结果。
 
 ### 1.2 开发背景
 
@@ -18,7 +18,7 @@
 
 ### 1.3 适用范围
 
-当前版本主要在具有 NVIDIA GPU 的 Linux 工作站或服务器上运行，支持图像清单输入、视频抽帧、自动预测、缓存预测复用、逐帧拟合和结果打包。参考配置使用 1280×720 图像。
+当前版本主要在具有 NVIDIA GPU 的 Linux 工作站或服务器上运行，支持图像清单输入、视频抽帧、自动预测、缓存预测复用、逐帧拟合和结果打包。当前处理入口要求输入图像为 1280×720，并检查标定文件中的尺寸是否一致。
 
 双目相机的 cam3、cam4 图像分别使用各自的标定文件处理。当前算法按单幅图像拟合，没有实现左右视角的联合优化、双目三角化或跨帧姿态跟踪。视频抽帧记录帧号和近似时间，不能代替双目硬件同步。
 
@@ -36,19 +36,19 @@ RMSE 为 Root Mean Squared Error，即均方根误差。本文的点误差在原
 
 ### 1.5 参考资料
 
-[1] 软件开发文档编写规范 GB 8567-88，项目提供的标准文档，采用其中概要设计说明书及详细设计说明书的要求。
+[1] EgoWholeView: Camera-Only Head-Mounted Capture of Body and Bimanual Hand Motion for Embodied Demonstrations. v17.3 论文源稿，申请人提供。
 
-[2] software.json，EgoSmplx V1.0，项目仓库根目录，记录软件名称、登记版本和默认处理配置。
+[2] cdh290718-oss. EgoSmplx 源代码仓库，https://github.com/cdh290718-oss/EgoSmplx，访问日期：2026-09-30。
 
-[3] 当前流程说明 CURRENT_PIPELINE_zh.md，2026-09-30，项目 docs 目录，说明 MANO 辅助身体优化及原接缝融合方法。
+[3] Na S, Noh S Y, Chang J Y. Egocentric Whole-Body Human Mesh Recovery with Prior-Guided Learning. ICIP, 2026. arXiv:2605.08606. 官方实现：https://github.com/naso06/EgoSMPLX。
 
-[4] 数据格式说明 DATA_FORMAT_zh.md，项目 docs 目录，说明坐标、观测字段、网格重建和点误差计算。
+[4] Potamias R A, Zhang J, Deng J, Zafeiriou S. WiLoR: End-to-end 3D Hand Localization and Reconstruction in-the-wild. CVPR, 2025. arXiv:2409.12259.
 
-[5] 验证记录 VALIDATION_zh.md 及配套 JSON、CSV，项目 docs 目录，记录已执行的测试和实际运行结果。
+[5] Pavlakos G, Choutas V, Ghorbani N, et al. Expressive Body Capture: 3D Hands, Face, and Body from a Single Image. CVPR, 2019: 10975-10985.
 
-[6] 部署说明 DEPLOYMENT_zh.md、backend_contract.json 和 runtime_versions.json，项目 docs 目录，说明外部模型接口及已部署环境版本。
+[6] Romero J, Tzionas D, Black M J. Embodied Hands: Modeling and Capturing Hands and Bodies Together. ACM Transactions on Graphics, 2017, 36(6): 245:1-245:17.
 
-[7] THIRD_PARTY_NOTICES.md 及源码来源清单，项目根目录和 docs 目录，说明组件依赖、迁移来源和文件摘要。
+[7] Khirodkar R, Wen H, Martinez J, et al. Sapiens2. ICLR, 2026. arXiv:2604.21681.
 
 ### 1.6 总体架构和设计思路
 
@@ -483,7 +483,7 @@ python -m egosmplx_pipeline.package --run outputs/example_run --archive result.z
 
 历史 session_hand6 归档另有八帧、16 只手，身体和手点分别为 100、336 点；旧流程身体 RMSE 为 31.96 像素，手部为 4.41 像素，没有新增 MANO 身体阶段。它与当前四场景八帧的输入、目标点数和流程不同，不与表 8 合并。
 
-本说明书使用仓库已有图片与验证文件，未重新运行预测模型。重建在同一部署环境中逐值一致的记录，也不能保证不同硬件和依赖版本下逐位一致。
+本章的结果图和误差来自仓库已有运行记录。论文参考资料 [1] 的 UnrealEgo-RW、DexYCB 和 HO3Dv3 实验使用双视角参数融合及各自的数据集协议，其 PA-MPJPE、PA-MPVPE 和角加速度指标不与本章二维自动目标 RMSE 合并统计。重建在同一部署环境中逐值一致的记录，也不能保证不同硬件和依赖版本下逐位一致。
 
 ## 11. 当前版本限制
 
