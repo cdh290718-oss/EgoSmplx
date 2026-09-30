@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2700" height="950" viewBox="0 0 2700 950">
+<rect width="100%" height="100%" fill="white"/>
+<text x="1350" y="30" font-family="SimSun,宋体" font-size="82" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">MANO 辅助身体优化</text>
+<rect x="40" y="205" width="780" height="580" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="430" y="250" font-family="SimSun,宋体" font-size="68" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">自动观测</text>
+<text x="430" y="370" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">Sapiens2 身体点</text>
+<text x="430" y="460" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">WiLoR 手腕与掌根</text>
+<text x="430" y="550" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">MANO 的 16 点腕环</text>
+<text x="430" y="640" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">冻结的可见前臂轮廓</text>
+<line x1="830" y1="505" x2="940" y2="505" stroke="#506e96" stroke-width="4"/>
+<polygon points="940,505 917,490 917,520" fill="#506e96"/>
+<rect x="960" y="205" width="780" height="580" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1350" y="250" font-family="SimSun,宋体" font-size="68" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">参数更新</text>
+<text x="1350" y="370" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">19 个身体关节</text>
+<text x="1350" y="460" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">整体朝向和平移</text>
+<text x="1350" y="550" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">固定体型与手指</text>
+<text x="1350" y="640" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">累计角度、腕距和深度</text>
+<line x1="1750" y1="505" x2="1860" y2="505" stroke="#506e96" stroke-width="4"/>
+<polygon points="1860,505 1837,490 1837,520" fill="#506e96"/>
+<rect x="1880" y="205" width="780" height="580" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="2270" y="250" font-family="SimSun,宋体" font-size="68" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">保存与复核</text>
+<text x="2270" y="370" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">最多 1400 步</text>
+<text x="2270" y="460" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">可行候选与早停</text>
+<text x="2270" y="550" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">CPU 重建及缩步</text>
+<text x="2270" y="640" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">身体参数、网格和报告</text>
+<text x="1350" y="850" font-family="SimSun,宋体" font-size="49" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">没有可行的新参数时，保留增强前身体并记录回退。</text>
+</svg>

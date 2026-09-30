@@ -25,23 +25,26 @@
 
 正文结构依据申请人提供的《软件开发文档编写规范－standardization of GB 8567-88.doc》中概要设计说明书、详细设计说明书两类提纲，合并为同一份设计说明书。概要部分覆盖引言、总体设计、接口、运行、数据结构、出错处理；详细部分按实际程序组覆盖描述、功能、性能、输入、输出、算法、流程、接口、存储、注释、限制、测试、尚未解决的问题 13 项。
 
-版式参考《面向第一视角鱼眼场景的人体姿态仿真数据集生成软件_V1.0软件设计说明书.pdf》：A4，黑体封面与标题，正文宋体／Times New Roman 10.5 磅、首行缩进 21 磅、固定行距 20.4 磅，一级标题 14 磅、二级标题 12 磅，图题置图下居中。目录采用 Word 自动目录并在 PDF 导出时更新。
+版式参考《面向第一视角鱼眼场景的人体姿态仿真数据集生成软件_V1.0软件设计说明书.pdf》：A4，左右页边距约 26 和 24 毫米，黑体封面与标题，正文宋体／Times New Roman 10.5 磅、首行缩进 21 磅、固定行距 20.4 磅，一级标题 14 磅、二级和三级标题 12 磅。目录列出一级章节，固定行距 15.6 磅，由 Word 更新页码。页眉文字为 9 磅，软件名称、版本和页码右对齐，不加横线。
 
-架构、流程、数据结构、约束、指标及验收图由 `tools/draw_design_figures.py` 生成，PNG 用于文档嵌入，SVG 供编辑。推理结果图取自本项目现有资产；参考仿真软件的序列数、帧数、耗时和渲染数据不作为本软件结果。当前四场景八帧与单帧控制器结果分别标注，自动观测误差、重载一致性、局部穿插验收分别解释。
+表格为黑色三线表，无底色和竖线，上下边框 1.5 磅、表头下边框 0.75 磅；表中文字 9 磅，表题置表上居中。短表整表排放，长表续页重复表头。图片保持原比例居中插入，图题置图下居中，与图片同页；正文说明图片中的阶段、场景和检查结果。命令和配置示例使用黑色细边框，目录树使用 Courier New。
+
+本次架构、身体增强和完整流程图由 `copyright/build_design_reference.py` 生成，PNG 用于文档嵌入，SVG 供编辑；其余四幅结果图从仓库原有单帧对比和八帧画廊裁取并排放。参考仿真软件的序列数、帧数、耗时和渲染数据不作为本软件结果。当前四场景八帧与单帧控制器结果分别标注，自动观测误差、重载一致性、局部穿插检查分别解释。正文共十三章，标准内容的章节对应表另存为 `docs/DESIGN_GB8567_INDEX.md`。
 
 ## 再生成
 
 安装 `requirements-docs.txt`。精确字体复现需要安装参考字体宋体、黑体、Times New Roman 和 Cambria；仓库不分发字体文件。
 
 ```powershell
-# Windows 已安装 Word：默认使用 Word，从同一 DOCX 导出 PDF。
-python tools/export_copyright.py
+# Windows 已安装 Word：仅生成本次参考版式的设计说明书。
+python copyright/build_design_reference.py
 
 # 仅生成可编辑 DOCX。
-python tools/export_copyright.py --docx-only
+python copyright/build_design_reference.py --docx-only
 
-# 需要重生成登记和权属草稿时。
+# 需要重新生成全部材料时，最后单独应用设计说明书版式。
 python tools/export_copyright.py --only all
+python copyright/build_design_reference.py
 ```
 
 其他平台可使用 `--pdf-backend libreoffice --font-path /path/to/chinese-font.ttf`；需要安装 LibreOffice 与相同字体，并重新检查字体替换及分页。默认不复制模型权重、人体模型数据、字体或申请人隐私材料。

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2700" height="1960" viewBox="0 0 2700 1960">
+<rect width="100%" height="100%" fill="white"/>
+<text x="1350" y="30" font-family="SimSun,宋体" font-size="92" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">软件流程</text>
+<rect x="460" y="170" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="192" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">1. 图像清单与相机标定</text>
+<text x="1210" y="268" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">读取每帧图像及对应标定</text>
+<line x1="1210" y1="348" x2="1210" y2="388" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,388 1195,365 1225,365" fill="#506e96"/>
+<rect x="460" y="393" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="415" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">2. 运行环境与输入检查</text>
+<text x="1210" y="491" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">核对路径、尺寸、摘要及模型</text>
+<line x1="1210" y1="571" x2="1210" y2="611" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,611 1195,588 1225,588" fill="#506e96"/>
+<rect x="460" y="616" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="638" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">3. 自动模型预测或缓存读取</text>
+<text x="1210" y="714" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">人体初值、身体点、分割与手部</text>
+<line x1="1210" y1="794" x2="1210" y2="834" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,834 1195,811 1225,811" fill="#506e96"/>
+<rect x="460" y="839" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="861" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">4. 刚体及身体关节拟合</text>
+<text x="1210" y="937" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">先调整整体，再拟合身体姿态</text>
+<line x1="1210" y1="1017" x2="1210" y2="1057" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,1057 1195,1034 1225,1034" fill="#506e96"/>
+<rect x="460" y="1062" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="1084" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">5. 手部匹配与腕点轮廓校正</text>
+<text x="1210" y="1160" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">冻结左右匹配及可见轮廓</text>
+<line x1="1210" y1="1240" x2="1210" y2="1280" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,1280 1195,1257 1225,1257" fill="#506e96"/>
+<rect x="460" y="1285" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="1307" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">6. MANO 辅助身体优化</text>
+<text x="1210" y="1383" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">约束手腕、掌根及腕环</text>
+<line x1="1210" y1="1463" x2="1210" y2="1503" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,1503 1195,1480 1225,1480" fill="#506e96"/>
+<rect x="460" y="1508" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="1530" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">7. 鱼眼抬升与原接缝融合</text>
+<text x="1210" y="1606" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">受限腕环候选和局部谐波位移</text>
+<line x1="1210" y1="1686" x2="1210" y2="1726" stroke="#506e96" stroke-width="4"/>
+<polygon points="1210,1726 1195,1703 1225,1703" fill="#506e96"/>
+<rect x="460" y="1731" width="1500" height="172" rx="18" fill="white" stroke="#506e96" stroke-width="4"/>
+<text x="1210" y="1753" font-family="SimSun,宋体" font-size="59" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">8. 独立重建与结果检查</text>
+<text x="1210" y="1829" font-family="SimSun,宋体" font-size="46" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">保存报告及重载、局部穿插结果</text>
+<line x1="2050" y1="170" x2="2090" y2="170" stroke="#859ec0" stroke-width="3"/>
+<line x1="2090" y1="170" x2="2090" y2="565" stroke="#859ec0" stroke-width="3"/>
+<line x1="2050" y1="565" x2="2090" y2="565" stroke="#859ec0" stroke-width="3"/>
+<text x="2370" y="339" font-family="SimSun,宋体" font-size="55" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">输入检查</text>
+<line x1="2050" y1="616" x2="2090" y2="616" stroke="#859ec0" stroke-width="3"/>
+<line x1="2090" y1="616" x2="2090" y2="788" stroke="#859ec0" stroke-width="3"/>
+<line x1="2050" y1="788" x2="2090" y2="788" stroke="#859ec0" stroke-width="3"/>
+<text x="2370" y="674" font-family="SimSun,宋体" font-size="55" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">自动观测</text>
+<line x1="2050" y1="839" x2="2090" y2="839" stroke="#859ec0" stroke-width="3"/>
+<line x1="2090" y1="839" x2="2090" y2="1457" stroke="#859ec0" stroke-width="3"/>
+<line x1="2050" y1="1457" x2="2090" y2="1457" stroke="#859ec0" stroke-width="3"/>
+<text x="2370" y="1120" font-family="SimSun,宋体" font-size="55" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">身体拟合</text>
+<line x1="2050" y1="1508" x2="2090" y2="1508" stroke="#859ec0" stroke-width="3"/>
+<line x1="2090" y1="1508" x2="2090" y2="1680" stroke="#859ec0" stroke-width="3"/>
+<line x1="2050" y1="1680" x2="2090" y2="1680" stroke="#859ec0" stroke-width="3"/>
+<text x="2370" y="1566" font-family="SimSun,宋体" font-size="55" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">局部融合</text>
+<line x1="2050" y1="1731" x2="2090" y2="1731" stroke="#859ec0" stroke-width="3"/>
+<line x1="2090" y1="1731" x2="2090" y2="1903" stroke="#859ec0" stroke-width="3"/>
+<line x1="2050" y1="1903" x2="2090" y2="1903" stroke="#859ec0" stroke-width="3"/>
+<text x="2370" y="1789" font-family="SimSun,宋体" font-size="55" fill="black" text-anchor="middle" dominant-baseline="text-before-edge">结果验证</text>
+</svg>
