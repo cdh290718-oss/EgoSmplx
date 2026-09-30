@@ -29,15 +29,19 @@
 
 表格为黑色三线表，无底色和竖线，上下边框 1.5 磅、表头下边框 0.75 磅；表中文字 9 磅，表题置表上居中。短表整表排放，长表续页重复表头。图片保持原比例居中插入，图题置图下居中，与图片同页；正文说明图片中的阶段、场景和检查结果。命令和配置示例使用黑色细边框，目录树使用 Courier New。
 
-本次架构、身体增强和完整流程图由 `copyright/build_design_reference.py` 生成，PNG 用于文档嵌入，SVG 供编辑；四幅结果图从仓库原有单帧对比和八帧画廊裁取并排放。说明书不插入硬件装置实物图和相机分工图。EgoWholeView v17.3 论文用于编写目的和研究背景参考，相关模型论文及软件仓库列于参考资料。参考仿真软件的序列数、帧数、耗时、渲染数据，以及论文双视角融合实验均不作为本软件结果。当前四场景八帧与单帧控制器结果分别标注，自动观测误差、重载一致性、局部穿插检查分别解释。正文共十三章，标准内容的章节对应表另存为 `docs/DESIGN_GB8567_INDEX.md`。
+图 1 参考 EgoWholeView v17.3 论文的 `figures/figure4new2.pdf`，由 `copyright/build_architecture_figure.py` 矢量重绘，采用白底、规整模块、浅绿身体分支、浅橙手部分支和细线箭头，只在输入、输出两处等比插入原始图像示例。嵌入资源为 `docs/assets/reference_architecture_v3.png`，同名 SVG 可编辑，绘图规范另存同目录；重导出文档时保留此资源。身体增强和完整流程图由 `copyright/build_design_reference.py` 生成，PNG 用于文档嵌入，SVG 供编辑；四幅结果图从仓库原有单帧对比和八帧画廊裁取并排放。说明书不插入硬件装置实物图和相机分工图。EgoWholeView v17.3 论文用于编写目的和研究背景参考，相关模型论文及软件仓库列于参考资料。架构图中的论文图像示例、参考仿真软件的序列数、帧数、耗时、渲染数据，以及论文双视角融合实验均不作为本软件结果。当前四场景八帧与单帧控制器结果分别标注，自动观测误差、重载一致性、局部穿插检查分别解释。正文共十三章，标准内容的章节对应表另存为 `docs/DESIGN_GB8567_INDEX.md`。
 
 ## 再生成
 
-安装 `requirements-docs.txt`。精确字体复现需要安装参考字体宋体、黑体、Times New Roman 和 Cambria；仓库不分发字体文件。
+安装 `requirements-docs.txt`。精确字体复现需要安装参考字体宋体、黑体、Times New Roman 和 Cambria；仓库不分发字体文件。重绘图 1 还需 Poppler 的 `pdftoppm`，字体目录包含 `simhei.ttf` 和 `arialbd.ttf`；可用 `EGOSMPLX_REFERENCE_FONT_DIR` 指定字体目录。
 
 ```powershell
 # Windows 已安装 Word：仅生成本次参考版式的设计说明书。
 python copyright/build_design_reference.py
+
+# 修改总体架构图后，先重绘，再导出说明书。
+python copyright/build_architecture_figure.py
+python copyright/build_design_reference.py --skip-figures
 
 # 仅生成可编辑 DOCX。
 python copyright/build_design_reference.py --docx-only
