@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+<rect width="1800" height="1120" fill="#F4F8FB"/>
+<rect x="0" y="0" width="1800" height="148" rx="0" fill="#14304D"/>
+<rect x="54" y="34" width="9" height="74" rx="4" fill="#087F8C"/>
+<text x="86.00" y="35" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">默认处理流程与四阶段结果</text>
+<text x="87.00" y="99" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#D5E5F3">MANO 辅助身体优化 → 原有有界轮廓接缝融合</text>
+<rect x="55" y="210" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="210" width="8" height="238" rx="4" fill="#3767A1"/>
+<text x="83.00" y="234" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">输入预检</text>
+<text x="83.00" y="293" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">帧清单、图像和标定</text>
+<text x="83.00" y="334" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">相机尺寸与摘要核对</text>
+<circle cx="85" cy="192" r="27" fill="#3767A1"/>
+<text x="68.50" y="173" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">01</text>
+<rect x="500" y="210" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="500" y="210" width="8" height="238" rx="4" fill="#3767A1"/>
+<text x="528.00" y="234" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">自动观测</text>
+<text x="528.00" y="293" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">EgoSMPLX / Sapiens2</text>
+<text x="528.00" y="334" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">WiLoR 手部候选</text>
+<circle cx="530" cy="192" r="27" fill="#3767A1"/>
+<text x="513.50" y="173" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">02</text>
+<rect x="945" y="210" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="945" y="210" width="8" height="238" rx="4" fill="#3767A1"/>
+<text x="973.00" y="234" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">身体两阶段拟合</text>
+<text x="973.00" y="293" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">全局姿态与平移</text>
+<text x="973.00" y="334" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">19 关节及刚体微调</text>
+<circle cx="975" cy="192" r="27" fill="#3767A1"/>
+<text x="958.50" y="173" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">03</text>
+<rect x="1390" y="210" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1390" y="210" width="8" height="238" rx="4" fill="#3767A1"/>
+<text x="1418.00" y="234" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">腕点与轮廓校正</text>
+<text x="1418.00" y="293" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">冻结一对一身份</text>
+<text x="1418.00" y="334" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">有限候选、可见轮廓</text>
+<circle cx="1420" cy="192" r="27" fill="#3767A1"/>
+<text x="1403.50" y="173" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">04</text>
+<rect x="55" y="562" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="562" width="8" height="238" rx="4" fill="#D97528"/>
+<text x="83.00" y="586" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">报告与结果包</text>
+<text x="83.00" y="645" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">四列投影与误差汇总</text>
+<text x="83.00" y="686" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">资产摘要、诊断与 ZIP</text>
+<circle cx="85" cy="544" r="27" fill="#D97528"/>
+<text x="68.50" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">08</text>
+<rect x="500" y="562" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="500" y="562" width="8" height="238" rx="4" fill="#D97528"/>
+<text x="528.00" y="586" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">独立验收</text>
+<text x="528.00" y="645" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">参数 / 网格 / OBJ 重载</text>
+<text x="528.00" y="686" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">局部穿插单独记录</text>
+<circle cx="530" cy="544" r="27" fill="#D97528"/>
+<text x="513.50" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">07</text>
+<rect x="945" y="562" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="945" y="562" width="8" height="238" rx="4" fill="#087F8C"/>
+<text x="973.00" y="586" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">原接缝融合</text>
+<text x="973.00" y="645" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">鱼眼反投影放置 MANO</text>
+<text x="973.00" y="686" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">局部谐波与形变限制</text>
+<circle cx="975" cy="544" r="27" fill="#087F8C"/>
+<text x="958.50" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">06</text>
+<rect x="1390" y="562" width="355" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1390" y="562" width="8" height="238" rx="4" fill="#087F8C"/>
+<text x="1418.00" y="586" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#14304D">MANO 辅助身体</text>
+<text x="1418.00" y="645" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">身体、腕点、掌根、腕环</text>
+<text x="1418.00" y="686" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">冻结轮廓与姿态先验</text>
+<circle cx="1420" cy="544" r="27" fill="#087F8C"/>
+<text x="1403.50" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#FFFFFF">05</text>
+<polyline points="410,330 490,330" fill="none" stroke="#3767A1" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="490.00,330.00 477.71,336.71 477.71,323.29" fill="#3767A1"/>
+<polyline points="855,330 935,330" fill="none" stroke="#3767A1" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="935.00,330.00 922.71,336.71 922.71,323.29" fill="#3767A1"/>
+<polyline points="1300,330 1380,330" fill="none" stroke="#3767A1" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1380.00,330.00 1367.71,336.71 1367.71,323.29" fill="#3767A1"/>
+<polyline points="1567,448 1567,519" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1567.00,519.00 1560.29,506.71 1573.71,506.71" fill="#087F8C"/>
+<polyline points="1390,683 1310,683" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1310.00,683.00 1322.29,676.29 1322.29,689.71" fill="#087F8C"/>
+<polyline points="945,683 865,683" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="865.00,683.00 877.29,676.29 877.29,689.71" fill="#087F8C"/>
+<polyline points="500,683 420,683" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="420.00,683.00 432.29,676.29 432.29,689.71" fill="#087F8C"/>
+<rect x="55" y="866" width="1690" height="112" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<text x="85.00" y="892" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="31" font-weight="700" fill="#14304D">四列展示</text>
+<text x="300.00" y="882" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#14304D">原始预测</text>
+<text x="300.00" y="930" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="25" font-weight="400" fill="#5D7284">raw/</text>
+<text x="650.00" y="882" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#14304D">Sapiens2 身体</text>
+<text x="650.00" y="930" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="25" font-weight="400" fill="#5D7284">body/</text>
+<text x="1000.00" y="882" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#14304D">MANO 辅助身体</text>
+<text x="1000.00" y="930" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="25" font-weight="400" fill="#5D7284">guided_body/</text>
+<text x="1350.00" y="882" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="700" fill="#14304D">最终融合</text>
+<text x="1350.00" y="930" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="25" font-weight="400" fill="#5D7284">fused/</text>
+<polyline points="55,1040 1745,1040" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="56.00" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#5D7284">依据：CURRENT_PIPELINE_zh.md；无匹配手时保留原身体，跳过新增手部增强。</text>
+<text x="1572.50" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#14304D">EgoSmplx V1.0</text>
+</svg>

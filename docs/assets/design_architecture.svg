@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+<rect width="1800" height="1120" fill="#F4F8FB"/>
+<rect x="0" y="0" width="1800" height="148" rx="0" fill="#14304D"/>
+<rect x="54" y="34" width="9" height="74" rx="4" fill="#087F8C"/>
+<text x="86.00" y="35" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">模块架构与运行边界</text>
+<text x="87.00" y="99" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#D5E5F3">配置驱动的逐帧流水线 · 多模型独立环境 · 可核验的结果资产</text>
+<rect x="55" y="188" width="1690" height="115" rx="18" fill="#EAF1FB"/>
+<text x="86.00" y="214" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700" fill="#14304D">统一控制层</text>
+<text x="374.00" y="219" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="400" fill="#14304D">CLI / 配置加载 / 输入预检 / SHA-256 指纹 / 日志 / 校验后续跑</text>
+<polyline points="900,303 900,348" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="900.00,348.00 893.29,335.71 906.71,335.71" fill="#087F8C"/>
+<rect x="55" y="358" width="360" height="382" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="358" width="8" height="382" rx="4" fill="#3767A1"/>
+<text x="83.00" y="382" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">输入与观测</text>
+<text x="83.00" y="441" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">图像、每相机鱼眼标定</text>
+<text x="83.00" y="483" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">EgoSMPLX 初始参数</text>
+<text x="83.00" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">Sapiens2 关节点与分割</text>
+<text x="83.00" y="567" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">WiLoR / MANO 手部</text>
+<rect x="490" y="358" width="405" height="382" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="490" y="358" width="8" height="382" rx="4" fill="#087F8C"/>
+<text x="518.00" y="382" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">身体与手部校正</text>
+<text x="518.00" y="441" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">刚体 → 19 关节微调</text>
+<text x="518.00" y="483" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">左右手一对一匹配</text>
+<text x="518.00" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">有界腕点校正</text>
+<text x="518.00" y="567" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">可见前臂轮廓选择</text>
+<rect x="970" y="358" width="355" height="382" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="970" y="358" width="8" height="382" rx="4" fill="#087F8C"/>
+<text x="998.00" y="382" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">增强与融合</text>
+<text x="998.00" y="441" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">MANO 辅助身体优化</text>
+<text x="998.00" y="483" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">固定形状和骨长</text>
+<text x="998.00" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">原有有界轮廓接缝</text>
+<text x="998.00" y="567" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">局部谐波位移</text>
+<rect x="1400" y="358" width="345" height="382" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1400" y="358" width="8" height="382" rx="4" fill="#D97528"/>
+<text x="1428.00" y="382" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">验收与导出</text>
+<text x="1428.00" y="441" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">独立重载 / OBJ 核验</text>
+<text x="1428.00" y="483" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">拓扑 / 硬约束诊断</text>
+<text x="1428.00" y="525" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">局部表面穿插检查</text>
+<text x="1428.00" y="567" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">报告、网格与结果包</text>
+<polyline points="415,548 481,548" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="481.00,548.00 468.71,554.71 468.71,541.29" fill="#087F8C"/>
+<polyline points="895,548 961,548" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="961.00,548.00 948.71,554.71 948.71,541.29" fill="#087F8C"/>
+<polyline points="1325,548 1391,548" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1391.00,548.00 1378.71,554.71 1378.71,541.29" fill="#087F8C"/>
+<rect x="55" y="790" width="1690" height="184" rx="18" fill="#14304D"/>
+<text x="86.00" y="818" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">运行边界</text>
+<text x="325.00" y="823" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="30" font-weight="400" fill="#E3EFF8">cam3、cam4 逐张处理，各用对应标定；当前不进行双目联合三角化或时序跟踪。</text>
+<text x="86.00" y="890" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="31" font-weight="700" fill="#FFFFFF">外部依赖</text>
+<text x="325.00" y="893" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="30" font-weight="400" fill="#E3EFF8">EgoSMPLX / Sapiens2 / WiLoR 模型环境、权重与 SMPL-X / MANO 模型资源</text>
+<polyline points="55,1040 1745,1040" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="56.00" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#5D7284">依据：README.md、CURRENT_PIPELINE_zh.md 与 pipeline.py。</text>
+<text x="1572.50" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#14304D">EgoSmplx V1.0</text>
+</svg>

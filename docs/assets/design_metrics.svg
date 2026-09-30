@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+<rect width="1800" height="1120" fill="#F4F8FB"/>
+<rect x="0" y="0" width="1800" height="148" rx="0" fill="#14304D"/>
+<rect x="54" y="34" width="9" height="74" rx="4" fill="#087F8C"/>
+<text x="86.00" y="35" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">四场景八帧：自动目标点拟合误差</text>
+<text x="87.00" y="99" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#D5E5F3">同批观测、14 只匹配手 · 合并所有点平方误差计算 RMSE · 越低越好</text>
+<rect x="55" y="183" width="326" height="50" rx="25" fill="#EAF1FB"/>
+<text x="123.50" y="191" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#3767A1">增强前自动基线</text>
+<rect x="410" y="183" width="402" height="50" rx="25" fill="#E8F6F4"/>
+<text x="503.00" y="191" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700" fill="#087F8C">增强身体＋原接缝</text>
+<text x="1624.01" y="194" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">单位：px</text>
+<text x="1663.00" y="250" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#5D7284">变化</text>
+<polyline points="535.0,274 535.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="527.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">0</text>
+<polyline points="710.0,274 710.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="694.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">10</text>
+<polyline points="885.0,274 885.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="869.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">20</text>
+<polyline points="1060.0,274 1060.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="1044.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">30</text>
+<polyline points="1235.0,274 1235.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="1219.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">40</text>
+<polyline points="1410.0,274 1410.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="1394.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">50</text>
+<polyline points="1585.0,274 1585.0,854" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="1569.00" y="868" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">60</text>
+<text x="55.00" y="306" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">身体：100 点</text>
+<rect x="535" y="284" width="725.340713741583" height="35" rx="9" fill="#3767A1"/>
+<rect x="535" y="333" width="656.6015909972737" height="35" rx="9" fill="#087F8C"/>
+<text x="1276.34" y="282" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#3767A1">41.45</text>
+<text x="1207.60" y="331" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">37.52</text>
+<text x="1640.00" y="304" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">-3.93</text>
+<text x="55.00" y="448" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">身体：排除鼻点 94 点</text>
+<rect x="535" y="426" width="709.570329163539" height="35" rx="9" fill="#3767A1"/>
+<rect x="535" y="475" width="674.894143069579" height="35" rx="9" fill="#087F8C"/>
+<text x="1260.57" y="424" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#3767A1">40.55</text>
+<text x="1225.89" y="473" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">38.57</text>
+<text x="1640.00" y="446" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">-1.98</text>
+<text x="55.00" y="590" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">肩 / 肘 / 腕：47 点</text>
+<rect x="535" y="568" width="942.96244629962" height="35" rx="9" fill="#3767A1"/>
+<rect x="535" y="617" width="904.9004828794873" height="35" rx="9" fill="#087F8C"/>
+<text x="1493.96" y="566" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#3767A1">53.88</text>
+<text x="1455.90" y="615" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">51.71</text>
+<text x="1640.00" y="588" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">-2.17</text>
+<text x="55.00" y="732" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">手部：294 点</text>
+<rect x="535" y="710" width="260.925" height="35" rx="9" fill="#3767A1"/>
+<rect x="535" y="759" width="308.35" height="35" rx="9" fill="#087F8C"/>
+<text x="811.92" y="708" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#3767A1">14.91</text>
+<text x="859.35" y="757" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#087F8C">17.62</text>
+<text x="1630.50" y="730" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="700" fill="#D97528">+2.71</text>
+<rect x="55" y="937" width="1690" height="72" rx="18" fill="#FFF2E6"/>
+<text x="86.00" y="957" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#14304D">身体指标下降，手部指标上升；这些指标以 Sapiens2 / WiLoR 自动点为参考，不代表三维精度。</text>
+<polyline points="55,1040 1745,1040" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="56.00" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#5D7284">数据：current_body_rmse.json；手部294点见 CURRENT_PIPELINE_zh.md / VALIDATION_zh.md。</text>
+<text x="1572.50" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#14304D">EgoSmplx V1.0</text>
+</svg>

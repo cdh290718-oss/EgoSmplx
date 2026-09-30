@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+<rect width="1800" height="1120" fill="#F4F8FB"/>
+<rect x="0" y="0" width="1800" height="148" rx="0" fill="#14304D"/>
+<rect x="54" y="34" width="9" height="74" rx="4" fill="#087F8C"/>
+<text x="86.00" y="35" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">MANO 辅助身体模块：IPO 与约束</text>
+<text x="87.00" y="99" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#D5E5F3">在已有身体上连续优化 · 原接缝算法单独执行</text>
+<rect x="55" y="205" width="440" height="343" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="205" width="8" height="343" rx="4" fill="#3767A1"/>
+<text x="83.00" y="229" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">输入 I</text>
+<text x="83.00" y="288" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">腕点 / 轮廓校正后的身体</text>
+<text x="83.00" y="329" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">Sapiens2 自动身体点</text>
+<text x="83.00" y="370" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">WiLoR 腕点和非拇指 MCP</text>
+<text x="83.00" y="411" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">MANO 16 点腕环与冻结轮廓</text>
+<rect x="630" y="205" width="540" height="343" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="630" y="205" width="8" height="343" rx="4" fill="#087F8C"/>
+<text x="658.00" y="229" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">处理 P</text>
+<text x="658.00" y="288" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">优化 19 个身体关节及刚体</text>
+<text x="658.00" y="329" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">Huber 残差＋姿态先验</text>
+<text x="658.00" y="370" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">Adam 最多 1400 步</text>
+<text x="658.00" y="411" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">约束投影、迭代回退、CPU 复核</text>
+<rect x="1305" y="205" width="440" height="343" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1305" y="205" width="8" height="343" rx="4" fill="#D97528"/>
+<text x="1333.00" y="229" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">输出 O</text>
+<text x="1333.00" y="288" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">guided_body 标准参数</text>
+<text x="1333.00" y="329" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">网格 / 关节 / 四阶段投影</text>
+<text x="1333.00" y="370" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">optimization.json 日志</text>
+<text x="1333.00" y="411" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#5D7284">无可行新增参数则保留原身体</text>
+<polyline points="495,381 620,381" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="620.00,381.00 607.71,387.71 607.71,374.29" fill="#087F8C"/>
+<polyline points="1170,381 1295,381" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1295.00,381.00 1282.71,387.71 1282.71,374.29" fill="#087F8C"/>
+<rect x="55" y="591" width="1690" height="96" rx="18" fill="#14304D"/>
+<text x="84.00" y="620" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="31" font-weight="700" fill="#FFFFFF">组合目标</text>
+<text x="309.00" y="618" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="34" font-weight="400" fill="#FFFFFF">4×身体 ＋ 4×手腕 ＋ 掌根 ＋ 5×腕环 ＋ 1.5×轮廓 ＋ 先验</text>
+<rect x="55" y="741" width="540" height="227" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="741" width="8" height="227" rx="4" fill="#087F8C"/>
+<text x="83.00" y="765" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">保持固定</text>
+<text x="83.00" y="824" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">betas、手指、面部、双脚</text>
+<text x="83.00" y="864" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">骨长、匹配身份、轮廓支持集</text>
+<rect x="630" y="741" width="540" height="227" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="630" y="741" width="8" height="227" rx="4" fill="#087F8C"/>
+<text x="658.00" y="765" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">几何硬约束</text>
+<text x="658.00" y="824" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">整体角增量 ≤ 8°</text>
+<text x="658.00" y="864" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">平移 z：0.05–3 m；网格 z ≥ 0.02 m</text>
+<rect x="1205" y="741" width="540" height="227" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1205" y="741" width="8" height="227" rx="4" fill="#087F8C"/>
+<text x="1233.00" y="765" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="32" font-weight="700" fill="#14304D">误差与回退</text>
+<text x="1233.00" y="824" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">身体 RMSE 设上界</text>
+<text x="1233.00" y="864" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">连续 200 步无有效改善即停止</text>
+<polyline points="55,1040 1745,1040" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="56.00" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#5D7284">依据：CURRENT_PIPELINE_zh.md、reference/guided_body.py；自动拟合不读取人工标注。</text>
+<text x="1572.50" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#14304D">EgoSmplx V1.0</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+<rect width="1800" height="1120" fill="#F4F8FB"/>
+<rect x="0" y="0" width="1800" height="148" rx="0" fill="#14304D"/>
+<rect x="54" y="34" width="9" height="74" rx="4" fill="#087F8C"/>
+<text x="86.00" y="35" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF">数据接口与结果组织</text>
+<text x="87.00" y="99" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#D5E5F3">原始观测 → 标准身体参数 → 混合网格及独立诊断</text>
+<rect x="55" y="204" width="490" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="55" y="204" width="8" height="238" rx="4" fill="#3767A1"/>
+<text x="83.00" y="228" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">输入清单与观测</text>
+<text x="83.00" y="287" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">manifest：id / image / calibration</text>
+<text x="83.00" y="327" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">原图像素坐标、逐帧图像摘要</text>
+<text x="83.00" y="367" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#5D7284">NPZ 参数 / JSON 关节点 / NPY 分割</text>
+<rect x="640" y="204" width="495" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="640" y="204" width="8" height="238" rx="4" fill="#087F8C"/>
+<text x="668.00" y="228" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">标准身体阶段</text>
+<text x="668.00" y="287" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">raw / body / guided_body</text>
+<text x="668.00" y="327" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="26" font-weight="400" fill="#5D7284">params.npz：SMPL-X 参数及派生量</text>
+<text x="668.00" y="367" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">mesh.obj / wireframe.jpg</text>
+<rect x="1230" y="204" width="515" height="238" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<rect x="1230" y="204" width="8" height="238" rx="4" fill="#D97528"/>
+<text x="1258.00" y="228" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="35" font-weight="700" fill="#14304D">混合网格与报告</text>
+<text x="1258.00" y="287" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">mesh.npz / 同几何 OBJ</text>
+<text x="1258.00" y="327" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">recipe、冻结目标和验收 JSON</text>
+<text x="1258.00" y="367" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="400" fill="#5D7284">index.html / summary.json / ZIP</text>
+<polyline points="545,323 630,323" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="630.00,323.00 617.71,329.71 617.71,316.29" fill="#087F8C"/>
+<polyline points="1135,323 1220,323" fill="none" stroke="#087F8C" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1220.00,323.00 1207.71,329.71 1207.71,316.29" fill="#087F8C"/>
+<rect x="55" y="500" width="1690" height="478" rx="18" fill="#FFFFFF" stroke="#D2DEE8" stroke-width="2"/>
+<text x="88.00" y="527" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="36" font-weight="700" fill="#14304D">最终融合网格的重建依赖</text>
+<circle cx="102" cy="610" r="6" fill="#087F8C"/>
+<text x="126.00" y="593" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="28" font-weight="400" fill="#14304D">body_params.npz</text>
+<text x="650.00" y="593" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">最终身体基底参数</text>
+<circle cx="102" cy="676" r="6" fill="#087F8C"/>
+<text x="126.00" y="659" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="28" font-weight="400" fill="#14304D">wilor_predictions.npz</text>
+<text x="650.00" y="659" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">匹配的 MANO 手部预测</text>
+<circle cx="102" cy="742" r="6" fill="#087F8C"/>
+<text x="126.00" y="725" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="28" font-weight="400" fill="#14304D">recipe.json + calibration</text>
+<text x="650.00" y="725" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">冻结身份、配方与相机标定</text>
+<circle cx="102" cy="808" r="6" fill="#087F8C"/>
+<text x="126.00" y="791" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="28" font-weight="400" fill="#14304D">silhouette_targets.json</text>
+<text x="650.00" y="791" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">冻结轮廓目标与顶点支持集</text>
+<circle cx="102" cy="874" r="6" fill="#087F8C"/>
+<text x="126.00" y="857" dominant-baseline="text-before-edge" font-family="Consolas, monospace" font-size="28" font-weight="400" fill="#14304D">segmentation_labels.npy</text>
+<text x="650.00" y="857" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="29" font-weight="400" fill="#5D7284">图像部位标签</text>
+<rect x="1240" y="586" width="455" height="305" rx="18" fill="#E8F6F4"/>
+<text x="1269.00" y="612" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="33" font-weight="700" fill="#087F8C">融合结果</text>
+<text x="1269.00" y="675" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#14304D">由身体基底与手部、标定、</text>
+<text x="1269.00" y="719" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#14304D">冻结目标共同恢复。</text>
+<text x="1269.00" y="763" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#14304D">单一标准 SMPL-X 参数</text>
+<text x="1269.00" y="807" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="28" font-weight="400" fill="#14304D">无法恢复最终混合网格。</text>
+<polyline points="55,1040 1745,1040" fill="none" stroke="#D2DEE8" stroke-width="2" stroke-linejoin="round"/>
+<text x="56.00" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#5D7284">依据：DATA_FORMAT_zh.md；三维坐标单位为米，二维误差使用原始图像像素。</text>
+<text x="1572.50" y="1058" dominant-baseline="text-before-edge" font-family="Microsoft YaHei, sans-serif" font-size="24" font-weight="400" fill="#14304D">EgoSmplx V1.0</text>
+</svg>
