@@ -4,7 +4,8 @@ import sys,shutil
 import numpy as np
 from egosmplx_pipeline.reference.silhouette import OUT,PREV,targets,metrics,load,read,write,geometry,FishEyeCameraCalibrated,SIDES
 from egosmplx_pipeline.reference.support import constraints,JI,JOINT_MAPPING,MAX_DELTA_DEG,BODY_POSE_NAMES
-from egosmplx_pipeline.reference.support import native_projection
+from egosmplx_pipeline.reference.support import native_projection, head_neck_context
+import torch
 BASE=OUT.parent/'baseline'
 def merit(p,row,lookup,w,matches,cam,oldmesh):
  v,j=geometry(p);uv=cam.world2camera(j.astype(np.float64));rig=load(row['rigid_npz'])
@@ -21,7 +22,9 @@ def merit(p,row,lookup,w,matches,cam,oldmesh):
  pp=.0008*np.mean(((p['body_pose'].reshape(21,3)[ai]-rig['body_pose'].reshape(21,3)[ai])/caps[:,None])**2)
  pp+=.0002*np.mean(((p['transl'].reshape(3)-rig['transl'].reshape(3)) / [.1,.1,.18])**2)+.0004*np.mean(((p['global_orient']-rig['global_orient'])/np.deg2rad(8))**2)
  depth=.02*max(0,(.03-v[:,2].min())/.02)**2
- return float(body+4*np.mean(wrist)+.0008*np.mean(shape)+pp+depth)
+ hn=head_neck_context(rig,cam,lookup)
+ extra=float(hn.loss(torch.as_tensor(v),torch.as_tensor(uv)))
+ return float(body+4*np.mean(wrist)+.0008*np.mean(shape)+pp+depth+extra)
 
 for row in read(BASE/'automatic_input_manifest.json')['frames']:
  dst=OUT/'selected_frames'/row['condition']/row['camera'];dst.mkdir(parents=True,exist_ok=True)

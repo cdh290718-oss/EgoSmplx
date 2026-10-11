@@ -1,5 +1,6 @@
 """Sequential multi-environment controller with input hashing and verified resume."""
 import copy
+import json
 import datetime
 import fcntl
 import hashlib
@@ -28,6 +29,7 @@ def environment(config):
                   CUDA_VISIBLE_DEVICES=str(config.get('gpu', '0')),
                   EGOSMPLX_CONFIG=config['paths']['egosmplx_config'],
                   EGOSMPLX_REPO_ROOT=config['paths']['egosmplx_repo'])
+    result['EGOSMPLX_HEAD_NECK'] = json.dumps(config.get('head_neck', {}))
     result['PYTHONPATH'] = os.pathsep.join([str(PACKAGE_ROOT), config['paths'].get('wilor_repo', '')])
     return result
 
