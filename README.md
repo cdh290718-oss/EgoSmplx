@@ -132,3 +132,9 @@ python3 tools/export_copyright.py
 旧流程可通过 `pipeline_profile="session_hand6_full_pipeline_20260926_v1"` 选择；修改前恢复标签为 `checkpoint-before-mano-guided-flow-20260930`。切换流程使用新输出目录。
 
 当前版本保留标准人体形状参数及身体姿态先验。它能限制身体任意变细或膨胀，但不能保证自动标注、遮挡区域、极端姿态或手腕接缝都正确；重载与拓扑检查通过也不代表视觉精度已经达标。
+
+## 颈部与头部约束实验（默认关闭）
+
+本分支增加可选的 `head_neck` 配置。第三组 10 帧完整对照及中心 2 帧仅 neck 对照已完成：明显外扩受到抑制，但自动点残差、局部交叉和 CPU/GPU 边界检查仍存在代价，因此未替换正式默认流程。
+
+[方法与完整结果](docs/neck_head_results_20261011_zh.md)。修改前回退标签为 `checkpoint/pre-neck-head-20261011`（`7c5ee9f`）。删除 `head_neck` 配置或设置 `enabled: false` 使用原算法。
