@@ -75,7 +75,7 @@ def main():
         assert source_error < 1e-5
     from egosmplx_pipeline.head_neck import HeadNeck
     head_ids = np.where(layer.lbs_weights.detach().numpy().argmax(1)==smpl_x.orig_joints_name.index('Head'))[0]
-    head_neck = HeadNeck(initial[0].detach(),head_ids,smpl_x.joints_name.index('Neck'),lookup,(w,h))
+    head_neck = HeadNeck(initial[0].detach(),head_ids,smpl_x.joints_name.index('Neck'),lookup,(w,h),project=camera.world2camera_pytorch)
     def cpu(x):
         return x.detach().numpy()
     def error(pred, target):

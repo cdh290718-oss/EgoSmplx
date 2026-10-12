@@ -34,7 +34,7 @@ def head_neck_context(rigid, cam, lookup, device='cpu'):
     from egosmplx_pipeline.head_neck import HeadNeck
     vv,_=geometry(rigid)
     ids=np.where(smpl_x.layer['neutral'].lbs_weights.detach().cpu().numpy().argmax(1)==smpl_x.orig_joints_name.index('Head'))[0]
-    return HeadNeck(vv,ids,JI['Neck'],lookup,tuple(cam.img_size),device)
+    return HeadNeck(vv,ids,JI['Neck'],lookup,tuple(cam.img_size),device,project=cam.world2camera_pytorch)
 
 def constraints(p, source, rigid, cam, lookup):
     v,j=geometry(p); _,j0=geometry(source); _,jr=geometry(rigid)

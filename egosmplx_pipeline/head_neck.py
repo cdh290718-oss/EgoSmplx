@@ -15,7 +15,13 @@ DEFAULTS = dict(enabled=False, neck_enabled=True, guard_enabled=True,
                 neck_min_score=.3, neck_tolerance_diagonal=.02,
                 neck_weight=.1, head_angle_deg=8., head_distance_fraction=.85,
                 head_barrier_weight=.002, face_min_score=.7,
-                face_min_count=3, face_border_fraction=.02)
+                face_min_count=3, face_border_fraction=.02,
+                shoulders_enabled=False, shoulder_min_score=.3,
+                shoulder_weight=.1, shoulder_tolerance_diagonal=.02)
+
+# MoSh++ LSHO/RSHO transferred with its SMPL-H -> SMPL-X correspondence.
+# Surface proxies: exact Sapiens annotation convention remains unverified.
+SHOULDER_VERTICES = {'left_acromion': 4481, 'right_acromion': 6627}
 
 
 def settings():
@@ -23,7 +29,7 @@ def settings():
     if set(supplied) - set(DEFAULTS):
         raise ValueError('Unknown head/neck settings')
     result = dict(DEFAULTS, **supplied)
-    for key in ['enabled', 'neck_enabled', 'guard_enabled']:
+    for key in ['enabled', 'neck_enabled', 'guard_enabled', 'shoulders_enabled']:
         if not isinstance(result[key], bool):
             raise ValueError('Expected boolean ' + key)
     if not (0 < result['head_angle_deg'] < 90 and 0 < result['head_distance_fraction'] < 1):
@@ -32,7 +38,7 @@ def settings():
 
 
 class HeadNeck:
-    def __init__(self, rigid_vertices, head_ids, neck_index, lookup, size, device='cpu'):
+    def __init__(self, rigid_vertices, head_ids, neck_index, lookup, size, device='cpu', project=None):
         self.cfg = settings()
         self.enabled = self.cfg['enabled']
         self.neck_index = neck_index
@@ -56,6 +62,20 @@ class HeadNeck:
         self.neck_score = float(np.clip(q['score'],0,1)) if self.neck_active else 0.
         margin = min(q['x']/w, (w-q['x'])/w, q['y']/h, (h-q['y'])/h) if self.neck_active else 0.
         self.edge_factor = float(np.clip(margin/.03,.25,1.))
+        self.project = project
+        self.shoulders = []
+        if self.enabled and self.cfg['shoulders_enabled']:
+            if project is None:
+                raise ValueError('Shoulder surface observations require calibrated projection')
+            for name, vid in SHOULDER_VERTICES.items():
+                q = lookup.get(name)
+                if not self._usable(q, self.cfg['shoulder_min_score']):
+                    continue
+                margin = min(q['x']/w, (w-q['x'])/w, q['y']/h, (h-q['y'])/h)
+                self.shoulders.append(dict(name=name, vertex_id=vid,
+                    target=torch.tensor([q['x'],q['y']],dtype=torch.float32,device=device),
+                    score=float(np.clip(q['score'],0,1)),
+                    edge_factor=float(np.clip(margin/.03,.25,1.))))
 
     def _usable(self, q, threshold):
         return q is not None and np.isfinite([q['x'],q['y'],q['score']]).all() and q['score']>=threshold and 0<=q['x']<self.size[0] and 0<=q['y']<self.size[1]
@@ -78,6 +98,10 @@ class HeadNeck:
             distance = (pixels[self.neck_index]-self.neck_target).norm()/self.diag
             excess = F.relu(distance-self.cfg['neck_tolerance_diagonal'])
             result = result + self.cfg['neck_weight']*self.neck_score**2*self.edge_factor*F.smooth_l1_loss(excess,torch.zeros_like(excess),beta=.01)
+        for q in self.shoulders:
+            pixel = self.project(vertices[q['vertex_id']:q['vertex_id']+1])[0]
+            excess = F.relu((pixel-q['target']).norm()/self.diag-self.cfg['shoulder_tolerance_diagonal'])
+            result = result + self.cfg['shoulder_weight']*q['score']**2*q['edge_factor']*F.smooth_l1_loss(excess,torch.zeros_like(excess),beta=.01)
         if self.guard_active:
             result = result + self.cfg['head_barrier_weight']*F.relu(self.violations(vertices)+.1).square().mean()
         return result
@@ -86,7 +110,9 @@ class HeadNeck:
         with torch.no_grad():
             center=vertices[self.ids].mean(0);distance=center.norm().clamp_min(1e-6)
             angle=torch.rad2deg(torch.acos((center/distance*self.direction).sum().clamp(-1,1)))
-            return dict(settings=self.cfg,neck_active=bool(self.neck_active),head_guard_active=bool(self.guard_active),reliable_interior_face_points=int(self.face_count),
+            shoulders = [dict(name=q['name'],vertex_id=q['vertex_id'],score=q['score'],edge_factor=q['edge_factor'],
+                         target_px=q['target'].cpu().tolist(),error_px=float((self.project(vertices[q['vertex_id']:q['vertex_id']+1])[0]-q['target']).norm())) for q in self.shoulders]
+            return dict(settings=self.cfg,shoulder_observations=shoulders,neck_active=bool(self.neck_active),head_guard_active=bool(self.guard_active),reliable_interior_face_points=int(self.face_count),
                         neck_proxy='SMPL-X internal Neck; uncertain correspondence with Sapiens neck',neck_score=self.neck_score,neck_edge_factor=self.edge_factor,
                         neck_error_px=float((pixels[self.neck_index]-self.neck_target).norm()) if self.neck_active else None,
                         neck_tolerance_px=self.cfg['neck_tolerance_diagonal']*self.diag,head_angle_from_rigid_deg=float(angle),head_distance_ratio=float(distance/self.radius),
