@@ -21,6 +21,7 @@ def main():
     for key in ['repo-root', 'source-npz', 'image', 'calibration', 'automatic-keypoints', 'output-dir']:
         p.add_argument('--' + key, type=Path, required=True)
     p.add_argument('--steps', type=int, default=1600)
+    p.add_argument('--early-context', type=Path)
     a = p.parse_args()
     os.environ['EGOSMPLX_REPO_ROOT'] = str(a.repo_root.resolve())
     from egosmplx_pipeline.bootstrap import setup
@@ -76,6 +77,11 @@ def main():
     from egosmplx_pipeline.head_neck import HeadNeck
     head_ids = np.where(layer.lbs_weights.detach().numpy().argmax(1)==smpl_x.orig_joints_name.index('Head'))[0]
     head_neck = HeadNeck(initial[0].detach(),head_ids,smpl_x.joints_name.index('Neck'),lookup,(w,h),project=camera.world2camera_pytorch)
+    early = None
+    if a.early_context is not None:
+        from egosmplx_pipeline.early_observations import EarlyObservations
+        early = EarlyObservations(json.loads(a.early_context.read_text()),smpl_x,camera,
+                                  initial[0].numpy(),initial[2].numpy(),lookup,image,a.output_dir/'early_observations')
     def cpu(x):
         return x.detach().numpy()
     def error(pred, target):
@@ -108,6 +114,8 @@ def main():
             body = body0.clone()
             body[active_indices] = body[active_indices] + delta
             mesh, local, joints, pixels = forward(body, glob0 + gd, cam)
+            if early is not None and step % 25 == 0:
+                early.refresh(mesh.detach().numpy())
             rep = F.smooth_l1_loss((pixels[indices] - target) / t([w, h]), torch.zeros_like(target), beta=.003)
             pp = (delta / caps[:, None]).square().mean()
             cp = ((cam - cam0) / t([.10, .10, .18])).square().mean()
@@ -118,6 +126,8 @@ def main():
             # in raw meters was too weak relative to normalized pixel residuals.
             depth = F.relu((.03 - mesh[:, 2].min()) / .02).square()
             loss = rep + .0008*pp + .0002*cp + .0004*gp + .002*guard + .02*depth + head_neck.loss(mesh,pixels)
+            if early is not None:
+                loss = loss + early.loss(mesh,pixels)
             if not torch.isfinite(loss):
                 raise RuntimeError('Nonfinite objective')
             feasible = head_neck.feasible(mesh) and bool((wrist_dist >= wrist_floor - 1e-6).all() and mesh[:, 2].min() >= .02 - 1e-6)
@@ -128,6 +138,7 @@ def main():
             if step % 100 == 0 or step == a.steps:
                 item = dict(step=step, loss=value, reprojection=float(rep.detach()), feasible=feasible,
                             minimum_z_m=float(mesh[:, 2].min().detach()))
+                if early is not None:item['early_observations'] = early.last_terms.copy()
                 history.append(item)
                 print(label, item, flush=True)
             if step == a.steps:
@@ -165,6 +176,7 @@ def main():
             final_body[active_indices] += bd
             final_global = glob0 + gg
             mesh, local, joints, pixels = forward(final_body, final_global, cc)
+        if early is not None:early.finish(mesh,pixels)
         dst = a.output_dir / label
         dst.mkdir()
         saved = {k: v.copy() for k, v in raw.items()}
@@ -208,6 +220,7 @@ def main():
                       initial_wrist_camera_distance_m=cpu(initial_wrists).tolist(), minimum_vertex_z_m=float(mesh[:, 2].min()),
                       fixed_fields_bitwise_equal=fixed_keys, reload_mesh_error_m=reload_mesh_error, reload_pixel_error_px=reload_pixel_error,
                       head_neck=head_neck.report(mesh,pixels), history=history)
+        if early is not None:report['early_observations'] = early.report
         (dst / 'refinement_report.json').write_text(json.dumps(report, indent=2)+'\n')
         return report, cpu(pixels[indices]), cpu(mesh), overlay, cpu(final_body)
 

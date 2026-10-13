@@ -62,9 +62,25 @@ def run(config, row, output):
     common = ['--repo-root', config['paths']['egosmplx_repo'], '--image', row['image'], '--calibration', row['calibration']]
     invoke(body_rigid.main, common + ['--source-npz', raw_dir / 'params.npz', '--keypoints', predictions['sapiens'],
                                     '--output-dir', output / 'rigid', '--steps', config['fitting']['rigid_steps'], '--device', 'cpu'])
+    early_args = []
+    early_matches = None
+    if config.get('early_observations', {}).get('enabled', False):
+        early_hands = load(predictions['wilor'])
+        if 'image_sha256' in early_hands and str(early_hands['image_sha256']) != image_digest:
+            raise ValueError('WiLoR image hash differs from input')
+        if not np.array_equal(early_hands['image_size_wh'], image.shape[1::-1]):
+            raise ValueError('Early WiLoR image size mismatch')
+        rigid = canonicalize(load(output / 'rigid/optimized_params.npz'), model, camera)
+        early_matches = assign(early_hands, {q['name']:q for q in targets['keypoints']}, rigid['smplx_joint_img'], *image.shape[1::-1])
+        context = dict(settings=config['early_observations'], matches=early_matches,
+                       wilor=predictions['wilor'], segmentation=predictions['segmentation'],
+                       focal_length_px=config.get('cached_wilor_focal_px', 0),
+                       assignment_source='Sapiens wrists with rigid-body fallback, frozen before stage two')
+        write(output/'early_context.json', context)
+        early_args = ['--early-context', output/'early_context.json']
     invoke(body_pose.main, common + ['--source-npz', output / 'rigid/optimized_params.npz',
                                    '--automatic-keypoints', predictions['sapiens'],
-                                   '--output-dir', output / 'body_fit', '--steps', config['fitting']['pose_steps']])
+                                   '--output-dir', output / 'body_fit', '--steps', config['fitting']['pose_steps']] + early_args)
     body = canonicalize(load(output / 'body_fit/automatic/refined_params.npz'), model, camera)
     body_dir = output / 'body'
     body_dir.mkdir()
@@ -82,7 +98,7 @@ def run(config, row, output):
     if not np.array_equal(hands['image_size_wh'], image.shape[1::-1]):
         raise ValueError('WiLoR image size mismatch')
     lookup = {q['name']: q for q in targets['keypoints']}
-    matches = assign(hands, lookup, body['smplx_joint_img'], *image.shape[1::-1])
+    matches = early_matches if early_matches is not None else assign(hands, lookup, body['smplx_joint_img'], *image.shape[1::-1])
     mesh, hand_reports = fusion.stitch(body, hands, matches, camera)
     fused = output / 'fused'
     fused.mkdir()
