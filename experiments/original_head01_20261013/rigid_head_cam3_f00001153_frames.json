@@ -1,0 +1,19 @@
+[
+  {
+    "id": "cam3_f00001153",
+    "camera": "cam3",
+    "image": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_20frames_latest_20261009_v1/input/cam3/cam3_f00001153.png",
+    "calibration": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/DownwardStereo6/cam3_left_lower.egosmplx.json",
+    "image_sha256": "a33227c67d9266db8e8236b6729328bdccff3f5c30e41038bda1c101f8939bea",
+    "frame_index_zero_based": 1153,
+    "approximate_video_seconds": 19.415833333333335,
+    "sample_number": 3,
+    "source_video": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/session_hand_6/left_lower/左下_002_hand.mp4",
+    "predictions": {
+      "egosmplx": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_20frames_latest_20261009_v1/observed/cam3/observations/cam3_f00001153/network/smplx/cam3_f00001153_00_smplx.npz",
+      "sapiens": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_20frames_latest_20261009_v1/observed/cam3/observations/cam3_f00001153/sapiens/keypoints.json",
+      "wilor": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_20frames_latest_20261009_v1/batched/wilor/npz/cam3_f00001153_wilor.npz",
+      "segmentation": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_20frames_latest_20261009_v1/batched/segmentation/frames/cam3_f00001153"
+    }
+  }
+]
