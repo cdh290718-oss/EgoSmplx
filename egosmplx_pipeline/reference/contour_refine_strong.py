@@ -9,7 +9,7 @@ OUT=Path(os.environ['EGOSMPLX_REFERENCE_ROOT'])/'contour'
 BASE=OUT.parent/'baseline'
 
 from egosmplx_pipeline.reference.support import (read,write,load,arr,geometry,constraints,PARAMS,FIXED,SIDES,JI,MAX_DELTA_DEG,BODY_POSE_NAMES,JOINT_MAPPING,smpl_x,FishEyeCameraCalibrated)
-from egosmplx_pipeline.reference.support import native_projection
+from egosmplx_pipeline.reference.support import native_projection, head_neck_context
 from egosmplx_pipeline.reference.silhouette import targets,prepare,loss as silhouette_loss,metrics as silhouette_metrics,PREV
 
 def main():
@@ -24,6 +24,7 @@ def main():
   if (dst/'refinement.json').exists():continue
   bd=BASE/'frames'/row['condition']/row['camera'];p=load(PREV/'final_frames'/row['condition']/row['camera']/'body_params.npz');source=load(row['source_npz']);rigid=load(row['rigid_npz']);w=load(row['wilor_npz']);oldmesh=load(bd/'hybrid_mesh.npz');matches=read(bd/'recipe.json')['matches'];cam=FishEyeCameraCalibrated(row['calibration'])
   lookup={q['name']:q for q in read(row['sapiens_json'])['keypoints']}
+  hn=head_neck_context(rigid,cam,lookup,dev)
   active=list(MAX_DELTA_DEG);ai=torch.tensor([BODY_POSE_NAMES.index(n) for n in active],device=dev);caps=t(np.deg2rad([MAX_DELTA_DEG[n] for n in active]))
   b0=t(rigid['body_pose']).reshape(21,3);g0=t(rigid['global_orient']).reshape(3);tr0=t(rigid['transl']).reshape(3)
   init_path=OUT/'frames'/row['condition']/row['camera']/'body_params.npz'
@@ -50,7 +51,7 @@ def main():
    o=layer(**params());v=o.vertices[0]+tr;j=o.joints[0,smpl_x.joint_idx]+tr;uv=cam.world2camera_pytorch(j);return v,j,uv
   def feasible(v,j,uv):
    err=(uv[ix]-goals).norm(dim=1)
-   return bool(v[:,2].min()>=.020001 and (j[[12,13]].norm(dim=1)>=floor+1e-6).all() and torch.sqrt((uv[bi]-bt).square().sum(1).mean())<=bodylimit-1e-4 and (err<=t(initial_werr)+3).all())
+   return hn.feasible(v) and bool(v[:,2].min()>=.020001 and (j[[12,13]].norm(dim=1)>=floor+1e-6).all() and torch.sqrt((uv[bi]-bt).square().sum(1).mean())<=bodylimit-1e-4 and (err<=t(initial_werr)+3).all())
   def objective(v,j,uv):
    body=(F.smooth_l1_loss((uv[bi]-bt)/t([1280,720]),torch.zeros_like(bt),beta=.003,reduction='none').mean(1)*bw).mean()
    wrists=F.smooth_l1_loss((uv[ix]-goals)/t([1280,720]),torch.zeros_like(goals),beta=.003)
@@ -60,7 +61,7 @@ def main():
    shape=torch.stack(seam).mean()
    priors=.0008*(delta/caps[:,None]).square().mean()+.0002*((tr-tr0)/t([.10,.10,.18])).square().mean()+.0004*(gd/np.deg2rad(8)).square().mean()
    depth=.02*F.relu((.03-v[:,2].min())/.02).square();guard=.002*F.relu((floor-j[[12,13]].norm(dim=1))/.05).square().mean()
-   return body+4*wrists+.0008*shape+priors+depth+guard+.4*silhouette_loss(v,cam,sil_data)
+   return body+4*wrists+.0008*shape+priors+depth+guard+.4*silhouette_loss(v,cam,sil_data)+hn.loss(v,uv)
   opt=torch.optim.Adam([{'params':[delta],'lr':.0015},{'params':[gd],'lr':.0005},{'params':[tr],'lr':.0008}])
   with torch.no_grad():v,j,uv=forward();bestloss=float(objective(v,j,uv));best=[x.detach().clone() for x in [delta,gd,tr]]
   rejected=0;start=time.time()
@@ -75,6 +76,7 @@ def main():
      pv,pj,pu=forward()
      br=(pu[bi]-bt).square().sum(1).mean().sqrt()
      violations=torch.cat([(br-bodylimit+.02).reshape(1)/5,(.02001-pv[:,2].min()).reshape(1)/.02,(floor+1e-5-pj[[12,13]].norm(dim=1))/.05,((pu[ix]-goals).norm(dim=1)-t(initial_werr)-2.99)/5])
+     violations=torch.cat([violations,hn.violations(pv)])
      g=violations.max()
      if float(g)<=0:break
      grads=torch.autograd.grad(g,[delta,gd,tr]);scales=[.0015,.0005,.0008]

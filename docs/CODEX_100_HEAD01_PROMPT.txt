@@ -1,0 +1,26 @@
+请在开发机执行固定的 100 张验证，只用 GitHub cdh290718-oss/EgoSmplx 的“原流程＋刚体头部参考权重 0.1”，保留回退，不调参、不额外加点、不使用人工拟合标注。
+
+代码目录：
+/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/original_head01_release_20261013/source
+先读该目录 docs/HEAD_REFERENCE_01_zh.md；环境、原权重和标定见 configs/pipeline.head01.developer.json。
+原视频：
+/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/session_hand_6/left_lower/左下_002_hand.mp4
+/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/session_hand_6/right_lower/右下_002_hand.mp4
+标定目录：/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/DownwardStereo6/，分别用 cam3_left_lower.egosmplx.json 和 cam4_right_lower.egosmplx.json。
+输出目录：
+/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_head01_100_20261013_v1
+
+在代码目录执行（用指定 Python）：
+PY=/vepfs-mlp2/mlp-public/huyaoqing/miniconda3/envs/egosmplx/bin/python3.8
+# experiment.json 不存在时才 prepare；若已准备，核对后直接用固定的 100 帧。
+"$PY" tools/evaluate_head01_100.py prepare
+"$PY" tools/evaluate_head01_100.py run --workers 2
+
+工具固定 50 个名义时间×两个相机，排除18–21秒及旧20帧附近，不按结果换图。使用原13点、原步数、原WiLoR及原接缝；仅开启rigid_head_weight=0.1，neck/肩部新增点及guard关闭。不要启动其他版本对照。
+
+推理后逐张检查 body 与 fused 的原分辨率投影，填写输出目录 expansion_review.csv 的 body_expansion/final_expansion：yes（明显外扩）、no（未见明显外扩）、uncertain（不能确定），并简记异常；进程/重载成功不能代替视觉判断，失败样本不能算无外扩。保留全部日志和中间结果。失败时诊断后可加 --retry-failed 在新目录重试，不擅自调参。
+
+最后执行：
+"$PY" tools/evaluate_head01_100.py montage
+只交付一张 final_100_contact_sheet.jpg（100张最终融合投影，标相机/时间/是否外扩），附一句“完成X/100，明显外扩Y张，待确认Z张”，列出异常帧ID即可；不需要建网站或长报告。不要把这一批未见外扩表述为所有场景都治好。
+完整回退：checkpoint/before-original-head01-default-20261013（7ebf5c4）；用独立worktree恢复，保留新旧结果。

@@ -1,0 +1,38 @@
+{
+  "paths": {
+    "body_python": "/vepfs-mlp2/mlp-public/huyaoqing/miniconda3/envs/egosmplx/bin/python3.8",
+    "pose_python": "/vepfs-mlp2/mlp-public/huyaoqing/miniconda3/envs/stereo-hand-fusion/bin/python3.10",
+    "wilor_python": "/vepfs-mlp2/mlp-public/huyaoqing/miniconda3/envs/wilor/bin/python3.10",
+    "egosmplx_repo": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX",
+    "egosmplx_config": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/main/config/config_ft_egopw_sceneego_egowholebody_unrealego_egofishbody.py",
+    "egosmplx_checkpoint": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/output/train_5datasets_8gpu_camtrans_w10_12ep_fixed_20260809_20260809_163018/model_dump/snapshot_11.pth.tar",
+    "sapiens_repo": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/official_baseline/sapiens2",
+    "sapiens_dependencies": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/.runtime/sapiens_deps",
+    "pose_checkpoint": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/pretrained_models/external_pose/sapiens2_1b_pose.safetensors",
+    "seg_checkpoint": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/pretrained_models/sapiens2_seg/sapiens2_1b_seg.safetensors",
+    "wilor_repo": "/vepfs-mlp2/mlp-public/huyaoqing/WiLoR",
+    "wilor_checkpoint": "/vepfs-mlp2/mlp-public/huyaoqing/WiLoR/pretrained_models/wilor_final.ckpt",
+    "wilor_config": "/vepfs-mlp2/mlp-public/huyaoqing/WiLoR/pretrained_models/model_config.yaml",
+    "wilor_detector": "/vepfs-mlp2/mlp-public/huyaoqing/WiLoR/pretrained_models/detector.pt"
+  },
+  "fitting": {
+    "rigid_steps": 1800,
+    "pose_steps": 1600,
+    "mano_guided_steps": 1400
+  },
+  "checkpoint_sha256": {
+    "pose": "2dab7014a17e99e460c18817325a71dd7a81ce48d87027f01c2ee7d7b3af969f",
+    "seg": "4b73c44963b377e93fcb4c4053f72a189836a22d05e12c30383046b9cd3c5bd4"
+  },
+  "pipeline_profile": "mano_guided_original_seam_20260929_v1",
+  "manifest": "frames.json",
+  "output": "${PACKAGE_ROOT}/outputs/head01_developer",
+  "head_neck": {
+    "enabled": true,
+    "neck_enabled": false,
+    "guard_enabled": false,
+    "shoulders_enabled": false,
+    "rigid_head_enabled": true,
+    "rigid_head_weight": 0.1
+  }
+}

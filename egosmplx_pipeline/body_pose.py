@@ -73,6 +73,9 @@ def main():
         wrist_floor = initial_wrists * .85
         source_error = float((initial[0] - t(raw['smplx_mesh_cam'])).abs().max())
         assert source_error < 1e-5
+    from egosmplx_pipeline.head_neck import HeadNeck
+    head_ids = np.where(layer.lbs_weights.detach().numpy().argmax(1)==smpl_x.orig_joints_name.index('Head'))[0]
+    head_neck = HeadNeck(initial[0].detach(),head_ids,smpl_x.joints_name.index('Neck'),lookup,(w,h),project=camera.world2camera_pytorch)
     def cpu(x):
         return x.detach().numpy()
     def error(pred, target):
@@ -114,10 +117,10 @@ def main():
             # Start the barrier before the hard near plane. The legacy penalty
             # in raw meters was too weak relative to normalized pixel residuals.
             depth = F.relu((.03 - mesh[:, 2].min()) / .02).square()
-            loss = rep + .0008*pp + .0002*cp + .0004*gp + .002*guard + .02*depth
+            loss = rep + .0008*pp + .0002*cp + .0004*gp + .002*guard + .02*depth + head_neck.loss(mesh,pixels)
             if not torch.isfinite(loss):
                 raise RuntimeError('Nonfinite objective')
-            feasible = bool((wrist_dist >= wrist_floor - 1e-6).all() and mesh[:, 2].min() >= .02 - 1e-6)
+            feasible = head_neck.feasible(mesh) and bool((wrist_dist >= wrist_floor - 1e-6).all() and mesh[:, 2].min() >= .02 - 1e-6)
             value = float(loss.detach())
             if feasible and value < best_loss:
                 best_loss = value
@@ -137,6 +140,23 @@ def main():
                 delta.mul_(torch.minimum(torch.ones_like(caps), caps / delta.norm(dim=1).clamp_min(1e-8))[:, None])
                 gd.mul_(torch.clamp(t(np.deg2rad(8.)) / gd.norm().clamp_min(1e-8), max=1.))
                 cam[2].clamp_(.05, 3.)
+            if head_neck.guard_active:
+                for _ in range(8):
+                    pb = body0.clone()
+                    pb[active_indices] += delta
+                    pv, _, _, _ = forward(pb,glob0+gd,cam)
+                    violation = head_neck.violations(pv).max()
+                    if float(violation)<=0:
+                        break
+                    gradients = torch.autograd.grad(violation,[delta,gd,cam])
+                    scales = [.0015,.0005,.0008]
+                    denominator = sum(g.square().sum()*s*s for g,s in zip(gradients,scales)).clamp_min(1e-12)
+                    with torch.no_grad():
+                        for x,g,s in zip([delta,gd,cam],gradients,scales):
+                            x.sub_(1.05*violation.detach()*g*s*s/denominator)
+                        delta.mul_(torch.minimum(torch.ones_like(caps),caps/delta.norm(dim=1).clamp_min(1e-8))[:,None])
+                        gd.mul_(torch.clamp(t(np.deg2rad(8.))/gd.norm().clamp_min(1e-8),max=1.))
+                        cam[2].clamp_(.05,3.)
         if best is None:
             raise RuntimeError('No feasible refinement candidate')
         with torch.no_grad():
@@ -187,7 +207,7 @@ def main():
                       wrist_camera_distance_m=cpu(joints[wrists].norm(dim=1)).tolist(),
                       initial_wrist_camera_distance_m=cpu(initial_wrists).tolist(), minimum_vertex_z_m=float(mesh[:, 2].min()),
                       fixed_fields_bitwise_equal=fixed_keys, reload_mesh_error_m=reload_mesh_error, reload_pixel_error_px=reload_pixel_error,
-                      history=history)
+                      head_neck=head_neck.report(mesh,pixels), history=history)
         (dst / 'refinement_report.json').write_text(json.dumps(report, indent=2)+'\n')
         return report, cpu(pixels[indices]), cpu(mesh), overlay, cpu(final_body)
 

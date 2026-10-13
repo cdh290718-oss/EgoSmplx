@@ -99,6 +99,7 @@ def export(config, rows, prepared, output):
         frame = output / 'frames' / row['id']
         report = read(frame / 'validation.json')
         report['pipeline_profile'] = selected(config)
+        report['head_neck_settings'] = config.get('head_neck', {})
         if row['id'] in mapping:
             reference_row = mapping[row['id']]
             relative = Path(reference_row['condition']) / reference_row['camera']

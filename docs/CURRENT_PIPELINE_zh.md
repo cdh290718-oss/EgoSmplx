@@ -1,6 +1,8 @@
-# 当前流程：MANO 辅助身体优化＋原接缝融合
+# 当前流程：原 MANO 辅助身体／原接缝＋头部参考 0.1
 
-更新日期：2026-09-30。软件名称和登记版本保持“第一视角下视双目鱼眼相机估计身体姿态软件 V1.0”。当前默认 `pipeline_profile` 为 `mano_guided_original_seam_20260929_v1`。
+更新日期：2026-10-13。新运行使用 configs/pipeline.example.json 中的 head_neck 配置。刚体阶段输出的头部顶点作为软参考，权重 0.1；neck、肩峰新增点和头部角度/距离 guard 均关闭。旧配置缺省时保留旧算法。细节、验证边界和完整回退见 [HEAD_REFERENCE_01_zh.md](HEAD_REFERENCE_01_zh.md)。
+
+以下原流程参数与历史八帧数据继续保留。软件名称和登记版本保持“第一视角下视双目鱼眼相机估计身体姿态软件 V1.0”。当前默认 `pipeline_profile` 为 `mano_guided_original_seam_20260929_v1`。
 
 ## 处理顺序
 
@@ -36,7 +38,8 @@
 ```json
 {
   "pipeline_profile": "mano_guided_original_seam_20260929_v1",
-  "fitting": {"rigid_steps": 1800, "pose_steps": 1600, "mano_guided_steps": 1400}
+  "fitting": {"rigid_steps": 1800, "pose_steps": 1600, "mano_guided_steps": 1400},
+  "head_neck": {"enabled": true, "neck_enabled": false, "guard_enabled": false, "shoulders_enabled": false, "rigid_head_enabled": true, "rigid_head_weight": 0.1}
 }
 ```
 
@@ -50,7 +53,7 @@
 
 最终混合网格需要身体参数、WiLoR 预测、标定、冻结身份、轮廓目标及分割标签共同重建；不能只由标准 SMPL-X 参数恢复。`package` 支持两种流程，并将新增身体阶段及诊断一并打包。
 
-## 八张图的实际结果
+## 2026-09-30 历史八张图结果（不含头部参考）
 
 本表对应四种 condition、各 cam3/cam4 的八张图，沿用同一批自动观测。与 session_hand6 八帧不是同一数据集，不能直接混合指标。
 

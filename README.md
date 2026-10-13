@@ -4,6 +4,8 @@
 
 本仓库默认采用已确认的 **MANO 辅助身体优化 → 原有有界轮廓接缝融合**，配置名 `mano_guided_original_seam_20260929_v1`。旧 `session_hand6_full_pipeline_20260926_v1` 流程作为可选配置保留。自动拟合不读取人工标注。
 
+**2026-10-13 更新：** 新运行请使用示例配置中的“原流程＋刚体头部参考权重 0.1”。仍使用原 13 个身体候选点；不新增 neck/肩部点，不启用头部角度/距离硬限制，不提前加入 MANO 或肩臂轮廓项。头部软参考延续到后续身体校正阶段。旧配置不填写 `head_neck` 时仍按旧算法运行，避免静默改变已有实验。见 [头部参考配置与回退](docs/HEAD_REFERENCE_01_zh.md)、[开发机 100 张推理提示词](docs/CODEX_100_HEAD01_PROMPT.txt)。
+
 **先读：[当前完整流程、参数、指标与恢复方法](docs/CURRENT_PIPELINE_zh.md)。** 新增阶段代码从已验证的八帧实验迁移；验证范围与结果见 [验证报告](docs/VALIDATION_zh.md)。[旧结果包流程](docs/REFERENCE_PIPELINE_zh.md)及旧重建记录继续保留，不能将旧验证直接视为新增算法已验证。
 
 ```mermaid
@@ -127,7 +129,7 @@ python3 -m pip install -r requirements-docs.txt
 python3 tools/export_copyright.py
 ```
 
-当前八帧：身体自动点 RMSE 41.45→37.52 px，手部自动点 RMSE 14.91→17.62 px；8/8 重载通过，4/8 局部穿插检查通过。当前采用版本并非所有指标最优。
+2026-09-30 历史八帧（未加入本次头部参考）：身体自动点 RMSE 41.45→37.52 px，手部自动点 RMSE 14.91→17.62 px；8/8 重载通过，4/8 局部穿插检查通过。当前采用版本并非所有指标最优。
 
 旧流程可通过 `pipeline_profile="session_hand6_full_pipeline_20260926_v1"` 选择；修改前恢复标签为 `checkpoint-before-mano-guided-flow-20260930`。切换流程使用新输出目录。
 

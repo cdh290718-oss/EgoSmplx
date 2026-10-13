@@ -27,5 +27,13 @@
     "pose_steps": 1600,
     "mano_guided_steps": 1400
   },
-  "pipeline_profile": "mano_guided_original_seam_20260929_v1"
+  "pipeline_profile": "mano_guided_original_seam_20260929_v1",
+  "head_neck": {
+    "enabled": true,
+    "neck_enabled": false,
+    "guard_enabled": false,
+    "shoulders_enabled": false,
+    "rigid_head_enabled": true,
+    "rigid_head_weight": 0.1
+  }
 }

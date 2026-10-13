@@ -30,6 +30,12 @@ def load(path):
 def native_projection(points, focal=25000.):
     return _project(points, focal, [640.,360.])
 
+def head_neck_context(rigid, cam, lookup, device='cpu'):
+    from egosmplx_pipeline.head_neck import HeadNeck
+    vv,_=geometry(rigid)
+    ids=np.where(smpl_x.layer['neutral'].lbs_weights.detach().cpu().numpy().argmax(1)==smpl_x.orig_joints_name.index('Head'))[0]
+    return HeadNeck(vv,ids,JI['Neck'],lookup,tuple(cam.img_size),device,project=cam.world2camera_pytorch)
+
 def constraints(p, source, rigid, cam, lookup):
     v,j=geometry(p); _,j0=geometry(source); _,jr=geometry(rigid)
     active=list(MAX_DELTA_DEG); ai=[BODY_POSE_NAMES.index(n) for n in active]
@@ -48,5 +54,9 @@ def constraints(p, source, rigid, cam, lookup):
     before=rmse(cam.world2camera(j0.astype(np.float64))[idx],target)
     after=rmse(cam.world2camera(j.astype(np.float64))[idx],target)
     assert after<=before+5.001
-    return dict(passed=True,body_delta_deg=dict(zip(active,map(float,delta))),sapiens_body_rmse_px=after,
+    import torch
+    hn=head_neck_context(rigid,cam,lookup)
+    head_report=hn.report(torch.as_tensor(v),torch.as_tensor(cam.world2camera(j.astype(np.float64))))
+    assert head_report['head_guard_passed']
+    return dict(passed=True,head_neck=head_report,body_delta_deg=dict(zip(active,map(float,delta))),sapiens_body_rmse_px=after,
                 sapiens_body_source_rmse_px=before,wrist_floor_m=floor.tolist(),body_minimum_z_m=float(v[:,2].min()))
