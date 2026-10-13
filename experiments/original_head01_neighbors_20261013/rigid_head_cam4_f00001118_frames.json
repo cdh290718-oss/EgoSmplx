@@ -1,0 +1,26 @@
+{
+  "frames": [
+    {
+      "id": "cam4_f00001118",
+      "camera": "cam4",
+      "image": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_group03_neighbors_20261010_v1/input/cam4/cam4_f00001118.png",
+      "calibration": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/DownwardStereo6/cam4_right_lower.egosmplx.json",
+      "image_sha256": "152f7d1d323adc7d33f864207819f061faa3789cd5a2325f9aa42c4e399307bb",
+      "frame_index_zero_based": 1118,
+      "approximate_video_seconds": 18.916669607843136,
+      "sample_number": 2,
+      "source_video": "/vepfs-mlp2/mlp-public/huyaoqing/EgoSMPLX/session_hand_6/right_lower/右下_002_hand.mp4",
+      "requested_offset_seconds": -0.5,
+      "actual_offset_seconds": -0.4906828431372549,
+      "center_id": "cam4_f00001147",
+      "center_seconds": 19.407352450980394,
+      "fps": 59.101312396789986,
+      "predictions": {
+        "egosmplx": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_group03_neighbors_20261010_v1/batched/cam4/network/smplx/cam4_f00001118_00_smplx.npz",
+        "sapiens": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_group03_neighbors_20261010_v1/batched/pose/cam4_f00001118/keypoints.json",
+        "wilor": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_group03_neighbors_20261010_v1/batched/wilor/npz/cam4_f00001118_wilor.npz",
+        "segmentation": "/vepfs-mlp2/mlp-public/huyaoqing/EgoFishPose/experiments/session_hand6_group03_neighbors_20261010_v1/batched/segmentation/frames/cam4_f00001118"
+      }
+    }
+  ]
+}
