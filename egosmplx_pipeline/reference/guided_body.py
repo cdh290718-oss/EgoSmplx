@@ -5,6 +5,7 @@ The manifest is built from this run's automatic observations, never manual data.
 """
 from pathlib import Path
 import os,argparse,copy,time,hashlib
+from egosmplx_pipeline.continuation import make_continuation
 import numpy as np,cv2,torch
 import torch.nn.functional as TF
 from egosmplx_pipeline.reference.support import (read,write,load,arr,rmse,geometry,constraints,PARAMS,FIXED,SIDES,JI,MAX_DELTA_DEG,BODY_POSE_NAMES,JOINT_MAPPING,smpl_x,FishEyeCameraCalibrated,FACES,write_obj,render,stitch,draw_geometry,native_projection)
@@ -53,9 +54,10 @@ def fit(row,steps):
  dev='cuda' if torch.cuda.is_available() else 'cpu';torch.set_num_threads(2);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
  layer=copy.deepcopy(smpl_x.layer['neutral']).to(dev).eval();layer.requires_grad_(False);t=lambda x:torch.as_tensor(x,dtype=torch.float32,device=dev)
  hn=head_neck_context(rigid,cam,lookup,dev)
+ consistent=make_continuation(row,p,rigid,cam,lookup,dev,dst,hn)
  data=prepare(data,dev);names=[n for n in JOINT_MAPPING if lookup[n]['score']>=.3 and 0<=lookup[n]['x']<1280 and 0<=lookup[n]['y']<720]
  bi=torch.tensor([JI[JOINT_MAPPING[n]] for n in names],device=dev);bt=t([[lookup[n]['x'],lookup[n]['y']] for n in names]);bw=t([lookup[n]['score']**2 for n in names]);bw/=bw.mean()
- active=list(MAX_DELTA_DEG);ai=torch.tensor([BODY_POSE_NAMES.index(n) for n in active],device=dev);caps=t(np.deg2rad([MAX_DELTA_DEG[n] for n in active]));b0=t(rigid['body_pose']).reshape(21,3);g0=t(rigid['global_orient']).reshape(3);tr0=t(rigid['transl']).reshape(3)
+ active=consistent.active if consistent else list(MAX_DELTA_DEG);ai=torch.tensor([BODY_POSE_NAMES.index(n) for n in active],device=dev);caps=t(np.deg2rad([MAX_DELTA_DEG[n] for n in active]));b0=t(rigid['body_pose']).reshape(21,3);g0=t(rigid['global_orient']).reshape(3);tr0=t(rigid['transl']).reshape(3)
  delta=(t(p['body_pose']).reshape(21,3)-b0)[ai].clone().requires_grad_();gd=(t(p['global_orient']).reshape(3)-g0).clone().requires_grad_();tr=t(p['transl']).reshape(3).clone().requires_grad_();variables=[delta,gd,tr]
  _,sj=geometry(source);_,rj=geometry(rigid);floor=t(np.maximum(np.linalg.norm(sj[[12,13]],axis=1),np.linalg.norm(rj[[12,13]],axis=1))*.85)
  _,initial_j=geometry(p)
@@ -67,11 +69,12 @@ def fit(row,steps):
   pis.append(torch.tensor([JI[HAND_NAMES[s][k]] for k in [5,9,13,17]],device=dev));pgs.append(t(w['joints_2d'][m['candidate'],[5,9,13,17]]))
  pp0={k:t(p[k]).reshape(1,-1) for k in PARAMS}
  def params():
-  pp=pp0.copy();body=b0.clone();body[ai]+=delta;pp.update(body_pose=body.reshape(1,-1),global_orient=(g0+gd).reshape(1,3));return pp
+  pp=pp0.copy();body=t(p['body_pose']).reshape(21,3).clone() if consistent else b0.clone();body[ai]=b0[ai]+delta;pp.update(body_pose=body.reshape(1,-1),global_orient=(t(p['global_orient']).reshape(3)+gd*0 if consistent else g0+gd).reshape(1,3));return pp
  def forward():
-  o=layer(**params());v=o.vertices[0]+tr;j=o.joints[0,smpl_x.joint_idx]+tr;return v,j,cam.world2camera_pytorch(j)
+  o=layer(**params());effective_tr=t(p['transl']).reshape(3)+tr*0 if consistent else tr;v=o.vertices[0]+effective_tr;j=o.joints[0,smpl_x.joint_idx]+effective_tr;return v,j,cam.world2camera_pytorch(j)
  def huber(a,b,beta=20):return TF.smooth_l1_loss(a,b,beta=beta,reduction='none')*beta/10000
  def objective(v,j,uv):
+  if consistent:return consistent.loss(v,j,uv,params()['body_pose'],params()['global_orient'],t(p['transl']).reshape(3)+tr*0)
   residual=uv[bi]-bt
   body=(huber(uv[bi],bt).mean(1)*bw).mean()+.15*(residual.square().mean(1)*bw).mean()/10000
   wrist=huber(uv[wi],wg).mean()
@@ -83,11 +86,14 @@ def fit(row,steps):
   delta.mul_(torch.minimum(torch.ones_like(caps),caps/delta.norm(dim=1).clamp_min(1e-8))[:,None]);gd.mul_(torch.clamp(t(np.deg2rad(8))/gd.norm().clamp_min(1e-8),max=1));tr[2].clamp_(.05,3)
  def violations(v,j,uv):return torch.cat([(torch.sqrt((uv[bi]-bt).square().sum(1).mean())-bodylimit+.01).reshape(1)/10,(.0205-v[:,2].min()).reshape(1)/.02,(floor+1e-5-j[[12,13]].norm(dim=1))/.05,hn.violations(v)])
  def valid(v,j,uv):return bool(violations(v,j,uv).max()<=0)
+ if consistent:consistent.freeze_globals(gd,tr)
  opt=torch.optim.Adam([{'params':[delta],'lr':.002},{'params':[gd],'lr':.0008},{'params':[tr],'lr':.0015}]);start=time.time();trace=[]
  with torch.no_grad():v,j,uv=forward();bestloss=float(objective(v,j,uv));best=[x.clone() for x in variables]
  initial=metrics(p,w,old,matches,cam,lookup,data);rejected=0;last_improvement=0
  for step in range(steps):
-  opt.zero_grad();v,j,uv=forward();loss=objective(v,j,uv);loss.backward();previous=[x.detach().clone() for x in variables];opt.step()
+  opt.zero_grad();v,j,uv=forward()
+  if consistent and step%25==0:consistent.refresh(v)
+  loss=objective(v,j,uv);loss.backward();previous=[x.detach().clone() for x in variables];opt.step()
   for _ in range(8):
    with torch.no_grad():clip()
    v,j,uv=forward();g=violations(v,j,uv).max()
@@ -125,6 +131,8 @@ def fit(row,steps):
    break
   except AssertionError:alpha*=.9
  else:q={k:x.copy() for k,x in p.items()};alpha=0.;check=constraints(q,source,rigid,cam,lookup)
+ if consistent:
+  consistent.finish(q);check=constraints(q,source,rigid,cam,lookup)
  v,j=geometry(q);pix=cam.world2camera(j.astype(np.float64)).astype(np.float32)
  q.update(smplx_mesh_cam=v,smplx_joint_cam=j,smplx_joint_img=pix,smplx_body_joints_3d_local=(j-q['transl'].reshape(3))[:25],smplx_body_joints_3d_render_cam=j[:25],smplx_body_joints_2d_render_cam=pix[:25],smplx_joint_cam_root_relative=j-j[:1])
  for k in FIXED+['left_hand_pose','right_hand_pose']:assert np.array_equal(p[k],q[k])

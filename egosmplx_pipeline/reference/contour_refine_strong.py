@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 import sys,copy,argparse,time
+from egosmplx_pipeline.continuation import make_continuation
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -25,7 +26,8 @@ def main():
   bd=BASE/'frames'/row['condition']/row['camera'];p=load(PREV/'final_frames'/row['condition']/row['camera']/'body_params.npz');source=load(row['source_npz']);rigid=load(row['rigid_npz']);w=load(row['wilor_npz']);oldmesh=load(bd/'hybrid_mesh.npz');matches=read(bd/'recipe.json')['matches'];cam=FishEyeCameraCalibrated(row['calibration'])
   lookup={q['name']:q for q in read(row['sapiens_json'])['keypoints']}
   hn=head_neck_context(rigid,cam,lookup,dev)
-  active=list(MAX_DELTA_DEG);ai=torch.tensor([BODY_POSE_NAMES.index(n) for n in active],device=dev);caps=t(np.deg2rad([MAX_DELTA_DEG[n] for n in active]))
+  consistent=make_continuation(row,p,rigid,cam,lookup,dev,dst,hn)
+  active=consistent.active if consistent else list(MAX_DELTA_DEG);ai=torch.tensor([BODY_POSE_NAMES.index(n) for n in active],device=dev);caps=t(np.deg2rad([MAX_DELTA_DEG[n] for n in active]))
   b0=t(rigid['body_pose']).reshape(21,3);g0=t(rigid['global_orient']).reshape(3);tr0=t(rigid['transl']).reshape(3)
   init_path=OUT/'frames'/row['condition']/row['camera']/'body_params.npz'
   initp=p
@@ -46,13 +48,14 @@ def main():
   sil_data=prepare(sil_data,dev)
   sil_before=silhouette_metrics(sv,cam,sil_data)
   def params():
-   pp={k:t(p[k]).reshape(1,-1) for k in PARAMS};body=b0.clone();body[ai]+=delta;pp.update(body_pose=body.reshape(1,-1),global_orient=(g0+gd).reshape(1,3));return pp
+   pp={k:t(p[k]).reshape(1,-1) for k in PARAMS};body=t(p['body_pose']).reshape(21,3).clone() if consistent else b0.clone();body[ai]=b0[ai]+delta;pp.update(body_pose=body.reshape(1,-1),global_orient=(t(p['global_orient']).reshape(3)+gd*0 if consistent else g0+gd).reshape(1,3));return pp
   def forward():
-   o=layer(**params());v=o.vertices[0]+tr;j=o.joints[0,smpl_x.joint_idx]+tr;uv=cam.world2camera_pytorch(j);return v,j,uv
+   o=layer(**params());effective_tr=t(p['transl']).reshape(3)+tr*0 if consistent else tr;v=o.vertices[0]+effective_tr;j=o.joints[0,smpl_x.joint_idx]+effective_tr;uv=cam.world2camera_pytorch(j);return v,j,uv
   def feasible(v,j,uv):
    err=(uv[ix]-goals).norm(dim=1)
    return hn.feasible(v) and bool(v[:,2].min()>=.020001 and (j[[12,13]].norm(dim=1)>=floor+1e-6).all() and torch.sqrt((uv[bi]-bt).square().sum(1).mean())<=bodylimit-1e-4 and (err<=t(initial_werr)+3).all())
   def objective(v,j,uv):
+   if consistent:return consistent.loss(v,j,uv,params()['body_pose'],params()['global_orient'],t(p['transl']).reshape(3)+tr*0)
    body=(F.smooth_l1_loss((uv[bi]-bt)/t([1280,720]),torch.zeros_like(bt),beta=.003,reduction='none').mean(1)*bw).mean()
    wrists=F.smooth_l1_loss((uv[ix]-goals)/t([1280,720]),torch.zeros_like(goals),beta=.003)
    seam=[]
@@ -62,11 +65,14 @@ def main():
    priors=.0008*(delta/caps[:,None]).square().mean()+.0002*((tr-tr0)/t([.10,.10,.18])).square().mean()+.0004*(gd/np.deg2rad(8)).square().mean()
    depth=.02*F.relu((.03-v[:,2].min())/.02).square();guard=.002*F.relu((floor-j[[12,13]].norm(dim=1))/.05).square().mean()
    return body+4*wrists+.0008*shape+priors+depth+guard+.4*silhouette_loss(v,cam,sil_data)+hn.loss(v,uv)
+  if consistent:consistent.freeze_globals(gd,tr)
   opt=torch.optim.Adam([{'params':[delta],'lr':.0015},{'params':[gd],'lr':.0005},{'params':[tr],'lr':.0008}])
   with torch.no_grad():v,j,uv=forward();bestloss=float(objective(v,j,uv));best=[x.detach().clone() for x in [delta,gd,tr]]
   rejected=0;start=time.time()
   for step in range(a.steps):
-   opt.zero_grad();v,j,uv=forward();loss=objective(v,j,uv);loss.backward()
+   opt.zero_grad();v,j,uv=forward()
+   if consistent and step%25==0:consistent.refresh(v)
+   loss=objective(v,j,uv);loss.backward()
    previous=[x.detach().clone() for x in [delta,gd,tr]];opt.step()
    if a.active_projection:
     # Project infeasible Adam proposals back onto nonlinear constraint surfaces.
@@ -109,6 +115,8 @@ def main():
    except AssertionError:cpu_alpha*=.9
   else:
    saved={k:x.copy() for k,x in p.items()};cpu_alpha=0.;acceptance=constraints(saved,source,rigid,cam,lookup)
+  if consistent:
+   consistent.finish(saved);acceptance=constraints(saved,source,rigid,cam,lookup)
   vv,jj=geometry(saved);local=jj-saved['transl'].reshape(3);pixels=cam.world2camera(jj.astype(np.float64)).astype(np.float32)
   saved.update(smplx_mesh_cam=vv,smplx_joint_cam=jj,smplx_joint_img=pixels,smplx_body_joints_3d_local=local[:25],smplx_body_joints_3d_render_cam=jj[:25],smplx_body_joints_2d_render_cam=pixels[:25],smplx_joint_cam_root_relative=jj-jj[:1])
   if 'smplx_body_joints_3d_cam' in saved:saved['smplx_body_joints_3d_cam']=jj[:25]

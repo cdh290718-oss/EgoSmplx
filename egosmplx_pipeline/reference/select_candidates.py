@@ -6,6 +6,7 @@ from egosmplx_pipeline.reference.silhouette import OUT,PREV,targets,metrics,load
 from egosmplx_pipeline.reference.support import constraints,JI,JOINT_MAPPING,MAX_DELTA_DEG,BODY_POSE_NAMES
 from egosmplx_pipeline.reference.support import native_projection, head_neck_context
 import torch
+from egosmplx_pipeline.continuation import make_continuation
 BASE=OUT.parent/'baseline'
 def merit(p,row,lookup,w,matches,cam,oldmesh):
  v,j=geometry(p);uv=cam.world2camera(j.astype(np.float64));rig=load(row['rigid_npz'])
@@ -33,13 +34,16 @@ for row in read(BASE/'automatic_input_manifest.json')['frames']:
   s=d['side'];d['ids']=np.unique(np.r_[d['ids'],om[s+'_local_to_mesh'][om[s+'_wrist_loop_local']]])
  paths={'previous':prev,'standard':OUT/'active_frames'/row['condition']/row['camera'],'strong':OUT/'strong_frames'/row['condition']/row['camera']};scores={};diag={}
  _,j0=geometry(p0);inituv=cam.world2camera(j0.astype(np.float64))
+ consistent=make_continuation(row,p0,load(row['rigid_npz']),cam,lookup,'cpu',dst,head_neck_context(load(row['rigid_npz']),cam,lookup))
  for name,path in paths.items():
   if not (path/'body_params.npz').exists():continue
   p=load(path/'body_params.npz');constraints(p,load(row['source_npz']),load(row['rigid_npz']),cam,lookup);v,j=geometry(p);uv=cam.world2camera(j.astype(np.float64))
   safe=all(np.linalg.norm(uv[12+SIDES.index(s)]-w['joints_2d'][a['candidate'],0])<=np.linalg.norm(inituv[12+SIDES.index(s)]-w['joints_2d'][a['candidate'],0])+3.001 for s,a in matches.items())
   mm=metrics(v,cam,data);sil=float(np.mean([x['score'] for x in mm.values()])) if mm else 0.;base=merit(p,row,lookup,w,matches,cam,om)
   diag[name]=dict(merit_without_silhouette=base,silhouette=sil,wrist_guard_passed=safe)
-  if safe:scores[name]=base+.4*sil
+  if safe:
+   scores[name]=consistent.score(p) if consistent else base+.4*sil
+   if consistent:diag[name]['consistent_objective']=scores[name]
  choice=min(scores,key=scores.get);shutil.copyfile(paths[choice]/'body_params.npz',dst/'body_params.npz')
  report=read(paths[choice]/'refinement.json');report.update(selected_candidate=choice,selection_scores=scores,selection_diagnostics=diag,matches=matches,original_identity_preserved=True)
  write(dst/'refinement.json',report);print(row['id'],choice,scores,flush=True)

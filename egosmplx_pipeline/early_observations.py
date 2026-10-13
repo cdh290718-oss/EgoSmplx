@@ -67,6 +67,13 @@ class EarlyObservations:
         (self.output/'observations.json').write_text(json.dumps(self.report,indent=2)+'\n')
         self.refresh(initial_vertices)
 
+    def to(self, device):
+        """Move frozen observation tensors; image-space targets remain unchanged."""
+        for d in self.hands + self.regions:
+            for key, value in list(d.items()):
+                if torch.is_tensor(value):d[key]=value.to(device)
+        return self
+
     def prepare_contours(self,context,model,v,j,lookup,w,overlay):
         seg=Path(context['segmentation']);lab=np.load(seg/'labels.npy');prob=np.load(seg/'probabilities.npz')['probabilities'].astype(np.float32)
         classes=[6,7,11,15,16,20,22,23];person=np.isin(lab,classes);confidence=prob[classes].sum(0)
@@ -134,7 +141,7 @@ class EarlyObservations:
             ids=torch.tensor(self.edges[ix]);uv=self.cam.world2camera_pytorch(v[ids].mean(1));outside=outside_loss(uv,d['map'],self.size)*d['containment_weight']
             skin=d['skin'];coverage=zero
             if len(skin)>=8:
-                dist=torch.cdist(skin[None],uv[None])[0];nearest=uv[dist.detach().argmin(1)]
+                dist=torch.cdist(skin[None],uv[None],compute_mode='donot_use_mm_for_euclid_dist' if skin.is_cuda else 'use_mm_for_euclid_dist_if_necessary')[0];nearest=uv[dist.detach().argmin(1)]
                 coverage=robust_pixels(nearest,skin,self.size)
             terms.append(outside+.5*coverage)
         contour=torch.stack(terms).mean() if terms else zero
